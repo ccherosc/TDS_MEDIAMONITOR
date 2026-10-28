@@ -27,6 +27,10 @@ Buying words: recommend, which should I buy, quote, budget, refresh, rollout, pi
 
 Disambiguation examples: Pax8 (exclude gene, biology), Arrow (exclude TV series, archery), Apple (enterprise and device management only), Microsoft (exclude Xbox and consumer gaming), HP vs HPE (separate companies).
 
+## Search-engine lens
+
+Search indexes keep copies of public Reddit threads. When Reddit's API is unavailable, find threads with `site:reddit.com/r/<subreddit> <term>` (collector: `BRAVE_API_KEY`; by hand: the dashboard's Hunt list has Google links). You get snippets, so open each thread before scoring it.
+
 ## Reddit (heaviest focus)
 
 Collector (scripts/collect.py) handles search and comments when it can reach Reddit. Otherwise search the web for reddit.com threads and open them.

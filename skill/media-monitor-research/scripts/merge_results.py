@@ -149,6 +149,13 @@ def normalize_item(it: dict, problems: list, idx: int):
     if x["response"]["recommended"] and not x["response"]["draft"]:
         x["response"]["recommended"] = False
         problems.append(f"{where}: response recommended without a draft, turned off")
+    cr = x.get("company_reply")
+    if isinstance(cr, dict):
+        hrs = _num(cr.get("hours_to_reply"))
+        x["company_reply"] = {"checked": cr.get("checked", True) is not False, "replied": bool(cr.get("replied")),
+                              "first_reply_at": cr.get("first_reply_at") or None, "hours_to_reply": hrs}
+    else:
+        x.pop("company_reply", None)
     v = dict(x.get("vision") or {})
     x["vision"] = {"analyzed": bool(v.get("analyzed")), "findings": v.get("findings") or ""}
     return x
@@ -199,6 +206,7 @@ def normalize_payload(p: dict, problems: list) -> dict:
     run.setdefault("agent", "other")
     run.setdefault("finished_at", now_iso())
     run["platform_focus"] = norm_focus(run.get("platform_focus"))
+    run["mode"] = run.get("mode") if run.get("mode") in ("sweep", "inbox", "revisit") else "sweep"
     focus = run["platform_focus"]
     if focus != "all":
         outside = [x for x in items if (x["platform"] if x["platform"] in ("reddit", "youtube") else "others") != focus]

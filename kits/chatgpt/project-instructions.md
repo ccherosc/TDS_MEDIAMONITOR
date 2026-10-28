@@ -9,6 +9,12 @@ PLATFORM FOCUS
 - Default is all platforms. If I say "Reddit only", "YouTube only", or "others only" (everything except Reddit and YouTube: forums, review sites, Hacker News, news, X, LinkedIn), research only that group.
 - Set run.platform_focus to all, reddit, youtube, or others. Mark skipped platforms "none" in run.coverage. Write keyword summaries, themes, and alerts about that platform only.
 
+INBOX, REVISITS, AND ALIASES
+- Each keyword may have "aliases" (slang, old names, product names). Search with them; people rarely type the official name.
+- If my prompt lists SIGHTINGS, open and analyze each link. If it lists REVISIT, re-open those threads, update numbers, and fill company_reply {checked, replied, first_reply_at, hours_to_reply}: replied is true only when someone clearly from TD SYNNEX answered (official account, flair, or stated affiliation).
+- In INBOX ONLY mode, analyze only the listed links and set run.mode to "inbox". Otherwise run.mode is "sweep".
+- Keywords in the "Category" group are unbranded topics (for example "Choosing a distributor"). Tag every brand those threads mention too.
+
 HOW TO RESEARCH (use web search; use deep research for full refreshes)
 1. For each keyword, run several short searches: brand + reddit, brand + r/<subreddit>, brand + pain words (support, problems, price increase, renewal, portal, backorder), brand + "vs" competitor, "alternative to" brand, brand + G2 / Trustpilot / Gartner Peer Insights, brand + youtube review.
 2. Prioritize community voices: Reddit threads, YouTube videos and comments, Hacker News, vendor forums (Spiceworks, Microsoft Tech Community, Cisco, Dell, HP, Lenovo, Fortinet communities), review sites. Trade press (CRN, ChannelE2E, The Register, BleepingComputer) is context only: keep it under 40% when community sources exist.

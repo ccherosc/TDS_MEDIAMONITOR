@@ -113,7 +113,24 @@ When you can view images, check:
 
 Write findings as one or two plain sentences ("Screenshot shows FortiOS 7.4.13 upgrade failing with error code -2 on a FortiGate 200F"). Never transcribe personal data visible in screenshots.
 
-## 8. Synthesis checklist per keyword
+## 8. Company reply tracking (revisits)
+
+When you open a thread, check whether someone clearly from TD SYNNEX replied: an official or Reddit Pro business account, a company flair, or a reply that states the affiliation ("I work at TD SYNNEX"). Do not guess from usernames.
+
+| Field | Value |
+|---|---|
+| checked | true once you looked |
+| replied | true only with clear affiliation |
+| first_reply_at | ISO time of the first TD SYNNEX reply |
+| hours_to_reply | first_reply_at minus the post time, in hours |
+
+Revisit watched threads after about 24 and 72 hours. Update engagement numbers and note late replies that change the sentiment.
+
+## 9. Category keywords (unbranded listening)
+
+Keywords in the `Category` group (for example "Choosing a distributor") track conversations that never name a brand. Tag every brand the thread mentions in `keyword_ids` as well, and use `keyword_sentiment` for each. These threads are the best source of conquest and switching signals.
+
+## 10. Synthesis checklist per keyword
 
 1. What are people saying right now, in one sentence?
 2. Which aspect hurts most and which is a strength?

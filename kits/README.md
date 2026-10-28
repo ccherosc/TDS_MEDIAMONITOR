@@ -15,6 +15,10 @@ Best depth: Claude Code on a computer with internet, because the collector reads
 
 Every kit can research all platforms or one group: **Reddit only**, **YouTube only**, or **Others** (forums, review sites, Hacker News, news). Pick it in the dashboard under Update data > Run research and the prompt says so. Focused runs keep their own keyword summaries, which appear when you set the dashboard's platform filter to match. Claude Code collector: `python scripts/collect.py --keywords keywords.json --platform-focus reddit`.
 
+## Inbox and revisits (all kits)
+
+The dashboard's Sightings tab collects links teammates spot, and **Watch thread** marks conversations to re-check. Run research > **Inbox only** writes a prompt that lists those links. Claude Code can fetch them directly: `python scripts/github_sync.py pull-queue` then `python scripts/collect.py --keywords keywords.json --queue queue.json --inbox-only`. Optional `BRAVE_API_KEY` turns on the search-engine lens for Reddit.
+
 ## Claude Code
 
 1. Unzip `media-monitor-research.zip` into `~/.claude/skills/` (so you have `~/.claude/skills/media-monitor-research/SKILL.md`).

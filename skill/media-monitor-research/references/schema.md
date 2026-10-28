@@ -25,6 +25,7 @@ Agents supply evidence and judgment. The dashboard does the math.
   "finished_at": "2026-10-28T15:10:00Z",
   "window_days": 90,
   "platform_focus": "all",
+  "mode": "sweep",
   "sources_used": ["reddit", "youtube", "hackernews", "forum", "review", "news"],
   "coverage": { "reddit": "full", "youtube": "partial", "hackernews": "full", "forum": "partial", "review": "partial", "news": "partial", "x": "none" },
   "notes": "Reddit collected via public JSON. YouTube via Data API (key present)."
@@ -32,6 +33,7 @@ Agents supply evidence and judgment. The dashboard does the math.
 ```
 
 agent: claude | chatgpt | cowork | script | other
+mode: sweep (keyword search, default) | inbox (only the sightings and watched threads you were given) | revisit
 platform_focus: all (default) | reddit | youtube | others. "others" means every platform except Reddit and YouTube (forums, review sites, Hacker News, news, X, LinkedIn). A focused run should only contain items from that platform group, mark the rest "none" in coverage, and write keyword summaries about that platform only. The dashboard stores focused summaries separately and shows them when its platform filter matches, so a Reddit-only run never overwrites the all-platform read-out.
 coverage values: full | partial | limited | none
 
@@ -81,6 +83,7 @@ sentiment: -1.0 (very negative) to +1.0 (very positive)
   "influence": "medium",
   "response": { "recommended": true, "priority": "high", "draft": "Suggested reply text.", "rationale": "Why respond." },
   "vision": { "analyzed": false, "findings": "" },
+  "company_reply": { "checked": true, "replied": false, "first_reply_at": null, "hours_to_reply": null },
   "collected_by": "reddit_api"
 }
 ```
@@ -101,6 +104,7 @@ sentiment: -1.0 (very negative) to +1.0 (very positive)
 | influence | low, medium, high (reach of the author or venue) |
 | response.draft | Write as a TD SYNNEX representative. Disclose affiliation. Helpful, not salesy. Empty if not recommended. |
 | vision | analyzed=true only if the agent actually looked at an image (screenshot, thumbnail, chart) and found something. |
+| company_reply | Optional. Fill it when you revisit a watched thread or open any thread: did someone clearly from TD SYNNEX reply (official account, flair, or a stated affiliation)? hours_to_reply = first TD SYNNEX reply time minus post time. The dashboard turns this into reply rate and response time. |
 | collected_by | reddit_api, youtube_api, hn_api, web_search, browser, manual, aggregator |
 
 ## insights (optional, cross-keyword)
@@ -122,6 +126,14 @@ sentiment: -1.0 (very negative) to +1.0 (very positive)
 
 alert types: sentiment_drop, volume_spike, crisis, opportunity, competitor_move
 owner: PR, Marketing, Product, Vendor Management, Sales, Partner Success, Executive
+
+## Other dashboard files (read-only for agents unless told otherwise)
+
+| File | Shape | Agents use it for |
+|---|---|---|
+| data/keywords.json | `{keywords: [{id, term, group, query, aliases[], subreddits[], notes, status}]}` | Which keywords to research. `aliases` are slang, old names, and product names people actually type. Groups include `Category` for unbranded topics such as "Choosing a distributor". |
+| data/sightings.json | `{items: {id: {id, url, keyword_ids[], note, status, added_by, added_at}}}` | Links teammates flagged. Pending ones are the inbox. A sighting counts as analyzed once an item with the same URL exists in results. |
+| data/state.json | `{items: {item_id: {status, watch, by, at}}}` | `watch: true` marks threads to revisit for late replies and company_reply. |
 
 ## Rules that keep the data trustworthy
 

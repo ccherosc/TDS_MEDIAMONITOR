@@ -3,6 +3,7 @@
 Media Monitor GitHub sync: read the keyword list and publish results to the dashboard repo.
 
   python github_sync.py pull-keywords [--out keywords.json]
+  python github_sync.py pull-queue [--out queue.json]  # pending sightings + watched threads
   python github_sync.py push results.json            # merges into data/results.json and commits
 
 Settings (flags or environment variables)
@@ -77,6 +78,8 @@ def main(argv=None):
     p = sub.add_parser("pull-keywords")
     p.add_argument("--out", default="keywords.json")
     p.add_argument("--all", action="store_true", help="include paused keywords")
+    qp = sub.add_parser("pull-queue", help="pending sightings + watched threads -> queue.json")
+    qp.add_argument("--out", default="queue.json")
     u = sub.add_parser("push")
     u.add_argument("file")
     u.add_argument("--message", default=None)
@@ -95,6 +98,22 @@ def main(argv=None):
         print(f"Saved {len(kws)} active keywords to {a.out}")
         for k in kws:
             print(f"  {k['id']:<22} {k['term']}  ({k.get('group', '')})")
+        return
+
+    if a.cmd == "pull-queue":
+        sightings, _ = read_file(a.repo, a.branch, "data/sightings.json", token)
+        state, _ = read_file(a.repo, a.branch, "data/state.json", token)
+        results, _ = read_file(a.repo, a.branch, "data/results.json", token)
+        analyzed = {i["id"] for i in (results or {}).get("items", [])}
+        by_id = {i["id"]: i for i in (results or {}).get("items", [])}
+        pend = [{"url": s["url"], "keyword_ids": s.get("keyword_ids", []), "note": s.get("note", "")}
+                for s in ((sightings or {}).get("items") or {}).values()
+                if s.get("status", "pending") == "pending" and s.get("id") not in analyzed]
+        watch = [{"url": by_id[i]["url"], "id": i, "keyword_ids": by_id[i].get("keyword_ids", [])}
+                 for i, st in ((state or {}).get("items") or {}).items() if st.get("watch") and i in by_id]
+        with open(a.out, "w", encoding="utf-8") as f:
+            json.dump({"sightings": pend, "watch": watch}, f, indent=1, ensure_ascii=False)
+        print(f"Saved {len(pend)} pending sightings and {len(watch)} watched threads to {a.out}")
         return
 
     if a.cmd == "push":

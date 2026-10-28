@@ -28,18 +28,19 @@ Works in any agent that can read this file: Claude (claude.ai, Claude Code), Mic
    Research only keywords with `"status": "active"`. Each keyword has `id`, `term`, `group`, `query` (search string), `subreddits`, and `notes` (what the team cares about). Keep the `id` values exactly; the dashboard matches on them.
 2. **Window.** Default the last 30 days. The user may say otherwise. Older items only as context (under 20%).
 3. **Platform focus.** Default `all`. The user (or the dashboard prompt) may ask for `reddit`, `youtube`, or `others` (everything except Reddit and YouTube: forums, review sites, Hacker News, news, X, LinkedIn). For a focused run: collect only from that platform group, set `run.platform_focus`, mark the other platforms `none` in `run.coverage`, and write keyword summaries, themes, and alerts about that platform only. The dashboard keeps focused summaries separate, so a Reddit-only run never replaces the all-platform read-out.
-4. **Previous results (optional, for momentum). `https://raw.githubusercontent.com/ccherosc/TDS_MEDIAMONITOR/main/data/results.json` holds earlier runs. Use it to label themes rising, steady, or fading and to detect sentiment shifts.
+4. **Inbox and revisits (optional).** Teammates flag links in the dashboard's Sightings inbox and mark threads to watch. The prompt may list them under SIGHTINGS and REVISIT. **[code]** `python scripts/github_sync.py pull-queue --out queue.json`. Analyze every listed link even if it is outside the platform focus. In **inbox mode** (`run.mode = "inbox"`) analyze only those links and skip the keyword sweep.
+5. **Previous results (optional, for momentum).** `https://raw.githubusercontent.com/ccherosc/TDS_MEDIAMONITOR/main/data/results.json` holds earlier runs. Use it to label themes rising, steady, or fading and to detect sentiment shifts.
 
 ## Workflow
 
 These steps run in order. Track progress with a checklist if your host supports one.
 
 1. **Load keywords and the previous results** (Inputs above).
-2. **Plan each keyword.** Expand the query with aliases, product names, and common misspellings. Add pain and intent variants (see sources.md, "Query expansion"). Pick communities: the keyword's `subreddits` plus the defaults for its group. Write down disambiguation rules (for example, Pax8 is also a gene; Arrow is also a TV show).
+2. **Plan each keyword.** Search with the keyword's `aliases` too (slang, old names, product names such as Synnex, Tech Data, StreamOne, disti). Most people never type the official name. Add common misspellings. Add pain and intent variants (see sources.md, "Query expansion"). Pick communities: the keyword's `subreddits` plus the defaults for its group. Write down disambiguation rules (for example, Pax8 is also a gene; Arrow is also a TV show).
 3. **Collect.**
    - **[code]** Run the collector first:
      `python scripts/collect.py --keywords keywords.json --days 30 --out raw`
-     For a focused run add `--platform-focus reddit` (or `youtube`, `others`).
+     For a focused run add `--platform-focus reddit` (or `youtube`, `others`). Add `--queue queue.json` to fetch sightings and watched threads (with `--inbox-only` for inbox mode). With `BRAVE_API_KEY` set, the collector also runs the search-engine lens, which finds Reddit threads through a search index and keeps working after Reddit's public API closes.
      It pulls Reddit posts with their top comments, Hacker News stories and comments, and YouTube videos with stats and top comments (when `YOUTUBE_API_KEY` is set), and saves post images and thumbnails to `raw/images/` for vision. See the script header for credentials.
    - **Always** run web search sweeps too (sources.md), limited to the platform focus: community forums, review sites, YouTube, and Reddit threads the collector missed. Use several short queries per keyword rather than one long one.
    - Open every candidate page. Read the comments, not just the post: the top replies usually carry the real sentiment and the fixes or workarounds.
@@ -48,7 +49,7 @@ These steps run in order. Track progress with a checklist if your host supports 
 6. **Vision.** If you can view images, look at saved images, screenshots linked in posts, and video thumbnails for items that have them. Record what you see in `vision.findings` and adjust signals (methodology.md, "Vision"). If you cannot view images, leave `vision.analyzed` false.
 7. **Synthesize per keyword.** Summary (2-3 sentences an executive can read in ten seconds), 3-6 themes with evidence ids and momentum versus the previous run, 2-4 risks, 2-4 opportunities framed for TD SYNNEX as the distributor.
 8. **Cross-keyword insights.** Alerts (only evidence-backed; thresholds in methodology.md), trends, recommended actions with an owner, and a 3-6 bullet executive summary. Look for competitive moves and "conquest" openings: pain at a competitor or vendor that TD SYNNEX can genuinely help with.
-9. **Draft replies** for items that warrant one (response-playbook.md).
+9. **Draft replies** for items that warrant one (response-playbook.md). For revisited and newly opened threads, fill `company_reply` (methodology.md, section 8).
 10. **Validate.** **[code]** `python scripts/merge_results.py check results.json` and fix what it reports. Without code, walk the checklist below.
 11. **Deliver** per references/delivery.md, then give the user a short summary table: items per keyword and platform, top three findings, alerts, and coverage gaps.
 

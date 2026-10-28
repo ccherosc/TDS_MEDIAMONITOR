@@ -43,6 +43,12 @@ If the user asks to update the Claude-hosted preview and you have Claude's artif
 
 Batch writes in groups of 50. Otherwise, use Route B on the preview: it has the same Load results button.
 
+## Sightings and watched threads
+
+- Pending sightings come from `data/sightings.json`; watched threads from `data/state.json` (`watch: true`). `github_sync.py pull-queue` writes both to queue.json.
+- You do not need to change sightings.json. A sighting shows as Analyzed in the dashboard once results contain an item with the same URL.
+- For a revisit, include the thread again as an item with fresh engagement and `company_reply`. The merge keeps the original first-seen date.
+
 ## Summary for the user (all routes)
 
 End with a short table: items per keyword, items per platform, new alerts, and anything you could not reach.

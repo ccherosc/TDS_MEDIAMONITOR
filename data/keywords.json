@@ -1,7 +1,7 @@
 {
  "schema": "media-monitor.keywords.v1",
  "workspace": "tdsynnex-internal",
- "updated_at": "2026-10-28T20:31:48Z",
+ "updated_at": "2026-10-28T21:04:13Z",
  "keywords": [
   {
    "id": "td-synnex",
@@ -20,7 +20,17 @@
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
    "order": 0,
-   "locked": true
+   "locked": true,
+   "aliases": [
+    "Synnex",
+    "Tech Data",
+    "StreamOne",
+    "TechData",
+    "StreamOne ION",
+    "Digital Bridge",
+    "Destination AI",
+    "Hyve Solutions"
+   ]
   },
   {
    "id": "ingram-micro",
@@ -35,7 +45,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 1
+   "order": 1,
+   "aliases": [
+    "Ingram",
+    "Xvantage",
+    "CloudBlue",
+    "Ingram Cloud"
+   ]
   },
   {
    "id": "pax8",
@@ -49,7 +65,10 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 2
+   "order": 2,
+   "aliases": [
+    "Pax 8"
+   ]
   },
   {
    "id": "dh-distributing",
@@ -64,7 +83,12 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 3
+   "order": 3,
+   "aliases": [
+    "D&H",
+    "DandH",
+    "D and H"
+   ]
   },
   {
    "id": "arrow",
@@ -79,7 +103,11 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 4
+   "order": 4,
+   "aliases": [
+    "ArrowSphere",
+    "Arrow ECS"
+   ]
   },
   {
    "id": "scansource",
@@ -94,7 +122,10 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 5
+   "order": 5,
+   "aliases": [
+    "Intelisys"
+   ]
   },
   {
    "id": "microsoft",
@@ -111,7 +142,14 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 6
+   "order": 6,
+   "aliases": [
+    "Microsoft CSP",
+    "Partner Center",
+    "NCE",
+    "M365 licensing",
+    "Microsoft 365 Copilot"
+   ]
   },
   {
    "id": "cisco",
@@ -128,7 +166,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 7
+   "order": 7,
+   "aliases": [
+    "Meraki",
+    "Webex",
+    "Splunk",
+    "Cisco TAC"
+   ]
   },
   {
    "id": "hp-inc",
@@ -143,7 +187,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 8
+   "order": 8,
+   "aliases": [
+    "HP EliteBook",
+    "HP Wolf",
+    "HP Amplify",
+    "HP printers"
+   ]
   },
   {
    "id": "hpe",
@@ -158,7 +208,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 9
+   "order": 9,
+   "aliases": [
+    "Hewlett Packard Enterprise",
+    "GreenLake",
+    "Aruba",
+    "Juniper"
+   ]
   },
   {
    "id": "dell",
@@ -173,7 +229,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 10
+   "order": 10,
+   "aliases": [
+    "Dell Latitude",
+    "PowerEdge",
+    "ProSupport",
+    "Dell Pro"
+   ]
   },
   {
    "id": "lenovo",
@@ -189,7 +251,12 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 11
+   "order": 11,
+   "aliases": [
+    "ThinkPad",
+    "ThinkSystem",
+    "ThinkCentre"
+   ]
   },
   {
    "id": "apple",
@@ -204,7 +271,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 12
+   "order": 12,
+   "aliases": [
+    "Apple Business Manager",
+    "Mac fleet",
+    "Apple Business",
+    "ABM"
+   ]
   },
   {
    "id": "palo-alto-networks",
@@ -220,7 +293,14 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 13
+   "order": 13,
+   "aliases": [
+    "Palo Alto",
+    "GlobalProtect",
+    "Prisma Access",
+    "Cortex XDR",
+    "PANW"
+   ]
   },
   {
    "id": "fortinet",
@@ -236,7 +316,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 14
+   "order": 14,
+   "aliases": [
+    "FortiGate",
+    "FortiOS",
+    "FortiClient",
+    "FortiAP"
+   ]
   },
   {
    "id": "crowdstrike",
@@ -252,7 +338,12 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 15
+   "order": 15,
+   "aliases": [
+    "Falcon sensor",
+    "CrowdStrike Falcon",
+    "Falcon"
+   ]
   },
   {
    "id": "ai-pcs",
@@ -267,7 +358,12 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 16
+   "order": 16,
+   "aliases": [
+    "Copilot+ PC",
+    "NPU laptop",
+    "AI laptop"
+   ]
   },
   {
    "id": "agentic-ai",
@@ -283,7 +379,12 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 17
+   "order": 17,
+   "aliases": [
+    "AI agents",
+    "Copilot agents",
+    "agent builder"
+   ]
   },
   {
    "id": "cloud-marketplace",
@@ -299,7 +400,13 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 18
+   "order": 18,
+   "aliases": [
+    "AWS Marketplace",
+    "Azure Marketplace",
+    "Microsoft Marketplace",
+    "private offer"
+   ]
   },
   {
    "id": "msp-tools",
@@ -313,7 +420,82 @@
    "status": "active",
    "added_at": "2026-10-28T18:30:00Z",
    "added_by": "setup",
-   "order": 19
+   "order": 19,
+   "aliases": [
+    "ConnectWise",
+    "Kaseya",
+    "NinjaOne",
+    "N-able",
+    "Datto",
+    "RMM",
+    "PSA"
+   ]
+  },
+  {
+   "id": "distributor-choice",
+   "term": "Choosing a distributor",
+   "group": "Category",
+   "query": "\"which distributor\" OR \"what distributor\" OR \"best distributor\" OR distie OR disti OR \"switch distributors\"",
+   "aliases": [
+    "which distributor",
+    "disti",
+    "distie",
+    "best distributor",
+    "switch distributors"
+   ],
+   "subreddits": [
+    "msp",
+    "sysadmin",
+    "ITManagers"
+   ],
+   "notes": "Unbranded threads where partners compare or choose distributors. Conquest openings.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 20
+  },
+  {
+   "id": "distributor-pain",
+   "term": "Distributor pain points",
+   "group": "Category",
+   "query": "\"distributor support\" OR \"distributor portal\" OR backorder OR \"credit line\" OR \"distie support\"",
+   "aliases": [
+    "distributor support",
+    "distributor portal",
+    "distie support",
+    "backorder",
+    "credit line"
+   ],
+   "subreddits": [
+    "msp",
+    "sysadmin"
+   ],
+   "notes": "Unbranded complaints about distributors in general: support, portals, stock, credit.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 21
+  },
+  {
+   "id": "reseller-margins",
+   "term": "Reseller margins and pricing",
+   "group": "Category",
+   "query": "\"MSP margins\" OR \"reseller margin\" OR \"license markup\" OR \"NCE pricing\" OR \"partner pricing\"",
+   "aliases": [
+    "MSP margins",
+    "reseller margin",
+    "license markup",
+    "NCE pricing",
+    "partner pricing"
+   ],
+   "subreddits": [
+    "msp"
+   ],
+   "notes": "How partners talk about margins, markups, and pricing pressure.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 22
   }
  ]
 }

@@ -22,9 +22,10 @@ Keywords (dashboard)  ->  Research skill (Claude, Cowork, ChatGPT)  ->  results 
 |---|---|
 | All analysis tabs | Filter by keyword, time window (30, 90 days, all), and platform (All, Reddit, YouTube, Others). The platform filter sticks between visits. |
 | Overview | Net sentiment, conversation count, replies needed, alerts, sentiment by platform, keyword table |
-| Conversations | Every conversation with filters, source links, suggested replies, and Mark responded / Dismiss |
+| Conversations | Every conversation with filters, source links, suggested replies, Mark responded / Dismiss, and Watch thread (re-checked next run for TD SYNNEX replies) |
 | Advanced | Narrative risk index, competitive position map, pain-point matrix, signal matrix, conquest opportunities, theme momentum, weekly sentiment, emotion profile, earned voice, vision findings, executive brief, agent feed |
-| Keywords | Add, pause, or remove keywords; run research; load results; export to Excel |
+| Sightings | Inbox for links teammates spot (paste box, bookmarks-bar button, Teams + Cowork), plus a Hunt list of ready-made Reddit and Google searches |
+| Keywords | Add, edit, pause, or remove keywords and their aliases (slang, old names, products); run research; load results; export to Excel |
 | Upgrades | Paid data feeds ranked by impact, with costs |
 
 ## Repo layout
@@ -39,6 +40,8 @@ Keywords (dashboard)  ->  Research skill (Claude, Cowork, ChatGPT)  ->  results 
 | skill/media-monitor-research/ | The research skill source (SKILL.md, references, scripts) |
 | kits/ | Ready-to-install packages for Claude, Copilot Cowork, and ChatGPT |
 | SETUP.md | Editing access, sharing, and the skill setup |
+| docs/REDDIT-PLAYBOOK.md | Reddit API deadline, Reddit Pro setup, Sightings routine, AMA, corporate ask |
+| data/sightings.json | The Sightings inbox |
 
 ## Pilot limits (read this)
 

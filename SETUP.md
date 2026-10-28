@@ -31,10 +31,15 @@ Same URL = same conversation, so loading overlapping results never double counts
 |---|---|
 | Check alerts and Needs attention (use the platform filter for a Reddit-only or YouTube-only view) | Overview |
 | Work the reply queue: open source, copy suggested reply, post from your own account, Mark responded | Conversations > Status: Needs response |
+| Work 3-5 Hunt list searches; paste good threads into the inbox | Sightings |
 | Copy the executive brief into email or Teams | Advanced > Executive brief |
 | Export conversations to Excel when needed | Update data > Sync & export > Download conversations (.csv) |
 
-## 5. Feed other AI agents
+## 5. Reddit plan
+
+Reddit closes its public API in March 2027. See `docs/REDDIT-PLAYBOOK.md` for the API request (due Oct 31), Reddit Pro setup, the Sightings routine, and the email to ask corporate about existing listening licenses.
+
+## 6. Feed other AI agents
 
 Advanced > **Agent feed** gives a stable JSON summary (keywords, sentiment, risk index, signals, alerts, response queue, buying signals). Your internal agents can also read `data/results.json` directly from the repo.
 
