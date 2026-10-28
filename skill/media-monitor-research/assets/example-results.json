@@ -1,0 +1,246 @@
+{
+ "_note": "Example of the media-monitor.v1 format, built from two real items in the first research run.",
+ "schema": "media-monitor.v1",
+ "workspace": "tdsynnex-internal",
+ "run": {
+  "id": "run-2026-10-28-example",
+  "agent": "claude",
+  "started_at": "2026-10-28T18:00:00Z",
+  "finished_at": "2026-10-28T19:00:00Z",
+  "window_days": 30,
+  "sources_used": [
+   "forum",
+   "review"
+  ],
+  "coverage": {
+   "reddit": "limited",
+   "youtube": "limited",
+   "hackernews": "limited",
+   "forum": "partial",
+   "review": "partial",
+   "news": "full"
+  },
+  "notes": "Example only."
+ },
+ "keywords": [
+  {
+   "id": "td-synnex",
+   "term": "TD SYNNEX",
+   "group": "Brand",
+   "query": "\"TD SYNNEX\" OR TDSYNNEX OR \"TD Synnex\" OR SYNNEX OR (\"Tech Data\" distributor) OR StreamOne OR \"StreamOne ION\" OR \"Digital Bridge\" OR \"Destination AI\" OR \"Hyve Solutions\" -Concentrix",
+   "summary": "Partner voices are scarce but sharply negative: four new 1-star Trustpilot reviews (Aug-Oct) from small resellers describe billed-but-unshipped orders, backorders, dropped freight terms and slow refunds, and none has a company reply. Investors are focused on a record fiscal Q3 (revenue +37.7%, EPS beat) that came with about $1B of free-cash-flow burn for Hyve AI inventory, which sent shares down about 9% intraday. MSP comparison guides still rank TD SYNNEX at or near the top for breadth and financing but repeatedly flag a dense, fragmented portal compared with Ingram Xvantage and Pax8.",
+   "themes": [
+    {
+     "name": "Fulfillment, billing and account-support breakdowns",
+     "sentiment": -0.78,
+     "mentions": 4,
+     "momentum": "rising",
+     "description": "Small resellers report billed-but-unshipped orders, repeated backorders, dropped free-shipping terms, a lapsed Veeam renewal and slow refunds, all unanswered on Trustpilot.",
+     "evidence_item_ids": [
+      "f4c74a4a3699"
+     ]
+    },
+    {
+     "name": "Record AI-driven quarter overshadowed by cash burn",
+     "sentiment": -0.15,
+     "mentions": 4,
+     "momentum": "steady",
+     "description": "Hyve billings more than doubled and EPS beat by about 20%, but ~$1B FCF burn, $15.3B inventory and a 61bp gross-margin dip drove a sell-off, and cash conversion is now the investor scorecard.",
+     "evidence_item_ids": []
+    }
+   ],
+   "risks": [
+    "Trustpilot profile sits at 1.8/5 (17 reviews). Four 1-star partner reviews since early August are unanswered and visible to prospects comparing distributors.",
+    "If promised Q4 cash generation doesn't arrive, the post-earnings slide could extend. Analysts are already probing Hyve contract cancellability and a possible data-center spending peak.",
+    "Comparison guides keep citing portal density and fragmentation (ECExpress plus StreamOne logins) against Ingram Xvantage and Pax8, a stated reason MSPs add a second distributor.",
+    "Small-reseller complaints point to freight-term changes and backorders being communicated poorly, which can drive quiet churn to D&H or Ingram."
+   ],
+   "opportunities": [
+    "Publicly answer and resolve the recent Trustpilot complaints (Veeam renewal lapse, $50K backorder, freight credits). With only 17 reviews, a few visible turnarounds move the profile.",
+    "Use PartnerFirst Digital Bridge and Agent Bridge as the direct answer to 'fragmented portal' critiques, and brief comparison-guide authors so their rankings reflect it.",
+    "Package Destination AI SMB tools and the free StreamOne AI Skills Marketplace for cloud-first MSPs weighing Pax8. It's a concrete AI practice offer with partner-earned consumption.",
+    "Position BlueStar and expanded IBM coverage as one-stop broadline plus specialty sourcing for partners that currently split purchasing across distributors."
+   ]
+  },
+  {
+   "id": "fortinet",
+   "term": "Fortinet",
+   "group": "Security",
+   "query": "Fortinet OR FortiGate OR FortiOS",
+   "summary": "Firmware regressions dominate admin sentiment this week. FortiOS 7.4.13 and 7.6.8 threads report FortiAPs going offline, broken admin SSO, blocked 30G/31G upgrades and lost WAN routing, and several threads have no Fortinet reply. Security news makes it worse: an exploited FortiMail zero-day, the FBI-confirmed FortiBleed credential campaign, and Gunra ransomware using older FortiOS bugs. Reviewers still credit FortiGate with strong value, SD-WAN and ease of management.",
+   "themes": [
+    {
+     "name": "Firmware regressions in 7.4.13 and 7.6.x",
+     "sentiment": -0.45,
+     "mentions": 7,
+     "momentum": "rising",
+     "description": "New builds are breaking APs, admin SSO, upgrades on small units, WAN routing and SSL-inspected traffic, and some threads are still open months later.",
+     "evidence_item_ids": [
+      "e111b5d9ba09"
+     ]
+    },
+    {
+     "name": "Exploited vulnerabilities and credential campaigns",
+     "sentiment": -0.6,
+     "mentions": 4,
+     "momentum": "rising",
+     "description": "A FortiMail zero-day, FortiBleed admin lockouts at over 86,000 devices and Gunra's use of older FortiOS bugs keep Fortinet edge devices in breach headlines.",
+     "evidence_item_ids": []
+    }
+   ],
+   "risks": [
+    "Back-to-back firmware regressions (7.4.13, 7.6.8) make admins wary of upgrading, which leaves devices on vulnerable builds while exploitation is active.",
+    "FortiBleed credential abuse and admin lockouts create urgent incident work for MSPs that manage FortiGate fleets.",
+    "Unanswered community threads and TAC cases that run for months feed a story of poor support quality.",
+    "PeerSpot firewall mindshare for FortiGate is down sharply year over year (20.6% to 13.0%), a sign of competitive pressure."
+   ],
+   "opportunities": [
+    "Publish a TD SYNNEX firmware advisory for Fortinet partners covering known issues, recommended builds and rollback steps.",
+    "Bundle MFA (FortiToken/FortiAuthenticator), management-plane hardening and credential-reset services into a FortiBleed response kit for partners.",
+    "Lean on FortiGate's value and SD-WAN strengths with price-sensitive mid-market buyers who are comparing against Palo Alto.",
+    "Help partners escalate long-running TAC cases through the distributor's Fortinet team."
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "f4c74a4a3699",
+   "keyword_ids": [
+    "td-synnex"
+   ],
+   "platform": "review",
+   "source_name": "Trustpilot",
+   "url": "https://br.trustpilot.com/reviews/6abe9a40538078b636dabd6b",
+   "title": "They are the worst company to deal…",
+   "author": "Universal Office (US)",
+   "published_at": "2026-10-01",
+   "engagement": {
+    "score": null,
+    "comments": null,
+    "views": null,
+    "likes": null,
+    "rating": 1
+   },
+   "summary": "A US office-supply reseller that uses TD SYNNEX as its only supplier says items billed for overnight shipping arrive slowly, overnight charges are never reimbursed, and customer service is poor. No company reply on the profile, which sits at 1.8/5 from 17 reviews.",
+   "excerpt": "They are the worst company to deal with.",
+   "sentiment": {
+    "label": "negative",
+    "score": -0.85,
+    "confidence": 0.9,
+    "emotion": "anger"
+   },
+   "aspects": [
+    {
+     "aspect": "logistics",
+     "sentiment": -0.85
+    },
+    {
+     "aspect": "support",
+     "sentiment": -0.8
+    },
+    {
+     "aspect": "other",
+     "sentiment": -0.7
+    }
+   ],
+   "signals": [
+    "partner_pain",
+    "brand_sentiment"
+   ],
+   "intent_stage": "none",
+   "entities": [
+    "TD SYNNEX",
+    "Trustpilot"
+   ],
+   "influence": "low",
+   "response": {
+    "recommended": true,
+    "priority": "high",
+    "draft": "Hi, I work on the customer experience team at TD SYNNEX. I'm sorry that orders you paid overnight freight on arrived late and that the charges were never credited. That's not acceptable, especially when you rely on us as your main supplier. If you reply here, we'll arrange a direct contact so we can match the affected orders to your account. I'll then push a freight-credit review with our logistics and credit teams and give you one named contact until it's resolved.",
+    "rationale": "Recent, unanswered complaint from a sole-source reseller about billing and delivery. A public fix-it reply also reassures prospects reading a 1.8-star profile."
+   },
+   "vision": {
+    "analyzed": false,
+    "findings": ""
+   },
+   "collected_by": "web_search"
+  },
+  {
+   "id": "e111b5d9ba09",
+   "keyword_ids": [
+    "fortinet"
+   ],
+   "platform": "forum",
+   "source_name": "Fortinet Community",
+   "url": "https://community.fortinet.com/support-forum-92/after-upgrade-to-7-4-13-many-ap-are-not-connected-230800",
+   "title": "After upgrade to 7.4.13 many AP are not connected",
+   "published_at": "2026-10-23",
+   "engagement": {
+    "score": null,
+    "comments": 6,
+    "views": 1148,
+    "likes": null,
+    "rating": null
+   },
+   "summary": "Several admins say FortiAPs went offline after upgrading to FortiOS 7.4.13, including on HA clusters and on FAP-431F, 441, 221E and 231K models. So far the only workarounds are rebooting FortiSwitches or the secondary HA unit. There is no Fortinet staff reply or root cause in the thread.",
+   "excerpt": "After upgrading to 7.4.13, many APs are no longer connecting to the firewall.",
+   "sentiment": {
+    "label": "negative",
+    "score": -0.5,
+    "confidence": 0.8,
+    "emotion": "frustration"
+   },
+   "aspects": [
+    {
+     "aspect": "product_quality",
+     "sentiment": -0.6
+    },
+    {
+     "aspect": "support",
+     "sentiment": -0.3
+    }
+   ],
+   "signals": [
+    "product_issue",
+    "partner_pain"
+   ],
+   "intent_stage": "none",
+   "entities": [
+    "FortiOS 7.4.13",
+    "FortiAP",
+    "FortiSwitch",
+    "FortiGate 200F"
+   ],
+   "influence": "medium",
+   "response": {
+    "recommended": true,
+    "priority": "medium",
+    "draft": "Disclosure: I work at TD SYNNEX, a Fortinet distributor. Here's a summary of what this thread has found so far, in case it helps. peter-supply got the APs back by restarting the FortiSwitches. TechAdmin saw them come back after an HA role change when the secondary unit was rebooted. No root cause has been posted yet, so opening a TAC case with your AP models, AP firmware and HA layout and linking this thread should help Fortinet connect the reports. If you haven't upgraded HA + FortiAP sites yet, it may be worth staying on 7.4.12 until Fortinet gives guidance. Partners who buy through TD SYNNEX can contact our Fortinet team if they need help escalating.",
+    "rationale": "Multiple admins report the same regression with no vendor reply; a factual summary and escalation path adds value for partners managing FortiAP fleets."
+   },
+   "vision": {
+    "analyzed": false,
+    "findings": ""
+   },
+   "collected_by": "web_search",
+   "author": "teiffert"
+  }
+ ],
+ "insights": {
+  "executive_summary": [
+   "Example bullet: unanswered 1-star reviews describe fulfillment and billing problems."
+  ],
+  "alerts": [],
+  "trends": [],
+  "recommended_actions": [
+   {
+    "action": "Reply to unanswered Trustpilot reviews through the business-response feature",
+    "owner": "Partner Success",
+    "priority": "high",
+    "evidence_item_ids": [
+     "f4c74a4a3699"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,261 @@
+{
+ "verified_on": "2026-10-28",
+ "note": "Reddit is closing its public doors. Per Reddit's Sept 30, 2026 developer announcement (as reported by PPC Land and WinBuzzer): new public API requests stop Oct 31, 2026, RSS feeds end Nov 13, 2026, access starts closing for unregistered apps Jan 12, 2027, and public Data API access ends in March 2027. After that, only partners with written agreements keep access. Suggested path: set up Reddit Pro Trends now (free, official), backfill history with an approved API app before March, and ask corporate communications whether TD SYNNEX already licenses Sprinklr or Brandwatch. Ask any aggregator below, in writing, where its Reddit data will come from after March 2027.",
+ "footnote": "Prices come from vendor pricing pages where available and third-party reports otherwise, checked Oct 28, 2026. Reddit timeline from PPC Land and WinBuzzer reports of Reddit's Sept 30, 2026 announcement. Monthly estimates assume about 20 keywords refreshed daily. Confidence shows how directly the price was verified. Not legal advice: have legal review data terms before signing.",
+ "items": [
+  {
+   "rank": 1,
+   "name": "Reddit Pro Trends",
+   "category": "Official Reddit tool",
+   "covers": [
+    "Reddit"
+   ],
+   "why": "Reddit's own business tool: track keywords, see conversation volume over time and which communities talk about you, and discover organic threads. Also gives TD SYNNEX an official business profile to reply from.",
+   "best_for": "Durable, sanctioned Reddit trend data after the public API closes",
+   "cost": "Reddit Pro is free for businesses. No export or API has been announced, so threads move into the dashboard by hand or through the Sightings inbox.",
+   "monthly": "$0",
+   "caveat": "Keywords chosen at account setup cannot be edited or removed later, so pick them carefully. Contextual filtering was still rolling out at launch.",
+   "setup_effort": "Low",
+   "integration": "Web app (manual)",
+   "url": "https://ppc.land/reddit-pro-launches-keyword-tracking-tool-to-enhance-business-insights/",
+   "confidence": "medium"
+  },
+  {
+   "rank": 2,
+   "name": "Octolens",
+   "category": "Social aggregator API",
+   "covers": [
+    "Reddit",
+    "Hacker News",
+    "LinkedIn",
+    "X",
+    "YouTube",
+    "GitHub",
+    "Trustpilot"
+   ],
+   "why": "A managed feed of Reddit posts and comments plus HN, LinkedIn, X, and YouTube, with sentiment, relevance, and buying-intent tags on every mention. It replaces hand-rolled Reddit polling and adds LinkedIn, which the pilot cannot reach.",
+   "best_for": "Brand and competitor sentiment, buying signals, partner pain points",
+   "cost": "Pro $159/mo billed annually ($199 monthly): 10 keywords, 15,000 mentions. Scale $499/mo annually ($599 monthly): 40 keywords, 50,000 mentions. Extra keywords $10/mo on Pro.",
+   "monthly": "$259-499",
+   "caveat": "Does not disclose whether its Reddit data is licensed. Ask in writing how it will source Reddit after Reddit's 2027 API changes before signing an annual plan. Reddit public API access ends March 2027; confirm how this vendor will source Reddit after that.",
+   "setup_effort": "Low",
+   "integration": "API, webhooks, MCP server",
+   "url": "https://octolens.com/pricing",
+   "confidence": "high"
+  },
+  {
+   "rank": 3,
+   "name": "ScrapeCreators",
+   "category": "Social data API",
+   "covers": [
+    "Reddit",
+    "YouTube",
+    "X",
+    "LinkedIn",
+    "TikTok",
+    "Instagram"
+   ],
+   "why": "Cheap pay-per-call JSON for Reddit search, subreddits, and full comment threads, plus YouTube, X, and LinkedIn behind one key. A drop-in replacement for the collector's Reddit step; the skill still does the sentiment scoring.",
+   "best_for": "Reddit depth and comment threads at the lowest cost",
+   "cost": "$47 for 25,000 credits ($1.88 per 1,000 calls); $497 for 500,000 credits. Credits never expire. 100 free credits to test.",
+   "monthly": "$15-30",
+   "caveat": "Scraped public data, not licensed from Reddit or X, so platform-terms risk stays with TD SYNNEX. Small vendor, so plan for continuity risk. Reddit public API access ends March 2027; confirm how this vendor will source Reddit after that.",
+   "setup_effort": "Low",
+   "integration": "API",
+   "url": "https://scrapecreators.com",
+   "confidence": "high"
+  },
+  {
+   "rank": 4,
+   "name": "F5Bot Gold",
+   "category": "Reddit and HN alerts",
+   "covers": [
+    "Reddit",
+    "Hacker News",
+    "Lobsters"
+   ],
+   "why": "Matches keywords in every Reddit comment, not just post titles, in near real time, for 200 keywords at a flat fee. Its JSON feed is simple to pull into the collector.",
+   "best_for": "Comment-level Reddit coverage for brand, competitor, and pain-point keywords",
+   "cost": "Gold $49.99/mo or $549/yr: 200 keywords, 5,000 alerts/day, RSS and JSON feeds. Platinum $214.99/mo adds API and webhooks.",
+   "monthly": "$50",
+   "caveat": "Free and Silver tiers are non-commercial only. How F5Bot obtains Reddit data is not disclosed. Reddit public API access ends March 2027; confirm how this vendor will source Reddit after that.",
+   "setup_effort": "Low",
+   "integration": "JSON/RSS feed",
+   "url": "https://f5bot.com/tiers",
+   "confidence": "high"
+  },
+  {
+   "rank": 5,
+   "name": "Apify Reddit and X actors",
+   "category": "Scraping platform",
+   "covers": [
+    "Reddit",
+    "X",
+    "YouTube"
+   ],
+   "why": "On-demand Reddit search across posts and comments with boolean queries, subreddit scoping, and time windows. The same account runs low-cost X and YouTube scrapers.",
+   "best_for": "Reddit backfills, competitor and product feedback sweeps, cheap X coverage",
+   "cost": "Reddit Search Scraper about $0.99 per 1,000 results. Plans: Free ($5 credit), Starter $19/mo, Scale $199/mo.",
+   "monthly": "$30-60",
+   "caveat": "Scrapes public pages, so Reddit and X terms risk stays with TD SYNNEX. Reddit public API access ends March 2027; confirm how this vendor will source Reddit after that.",
+   "setup_effort": "Medium",
+   "integration": "API",
+   "url": "https://apify.com/clearpath/reddit-search-scraper",
+   "confidence": "high"
+  },
+  {
+   "rank": 6,
+   "name": "Bright Data",
+   "category": "Enterprise web data",
+   "covers": [
+    "Reddit",
+    "LinkedIn",
+    "YouTube",
+    "X"
+   ],
+   "why": "Enterprise vendor with SLAs, SSO, and an account manager, which makes procurement and legal review easier than small API shops. Collects Reddit posts and comments and LinkedIn posts.",
+   "best_for": "Reliable Reddit and LinkedIn collection at scale, historical backfills",
+   "cost": "Web Scraper API: 5,000 records/mo free, then $1.50 per 1,000. Datasets from $250 per 100,000 records.",
+   "monthly": "$40-85",
+   "caveat": "Scraped, not Reddit-licensed. Reddit public API access ends March 2027; confirm how this vendor will source Reddit after that.",
+   "setup_effort": "Medium",
+   "integration": "API",
+   "url": "https://brightdata.com/pricing/web-scraper",
+   "confidence": "medium"
+  },
+  {
+   "rank": 7,
+   "name": "Reddit Data API (commercial agreement)",
+   "category": "Licensed Reddit data",
+   "covers": [
+    "Reddit"
+   ],
+   "why": "The only fully sanctioned Reddit route. Third-party guides treat brand and competitor monitoring as commercial use that needs written approval, even for internal use.",
+   "best_for": "Compliance and long-term durability of the Reddit feed",
+   "cost": "Quote-based; Reddit publishes no rate card. Reported entry contracts start around $12,000/yr; enterprise deals run far higher.",
+   "monthly": "Quote",
+   "caveat": "New public API requests close Oct 31, 2026 and public access ends March 2027; after that only written agreements remain. Approval and contract required.",
+   "setup_effort": "High",
+   "integration": "API",
+   "url": "https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy",
+   "confidence": "medium"
+  },
+  {
+   "rank": 8,
+   "name": "YouTube Data API quota extension",
+   "category": "Video",
+   "covers": [
+    "YouTube"
+   ],
+   "why": "Free. The default 10,000 units/day allows about 100 searches a day. An audit raises it if you move to hourly sweeps or pull more comments.",
+   "best_for": "Influencer and product-review video tracking",
+   "cost": "$0. Quota increases go through an audit form (a few days) and are re-audited every 12 months.",
+   "monthly": "$0",
+   "caveat": "Audit checks compliance with YouTube API terms, including data retention rules.",
+   "setup_effort": "Low",
+   "integration": "API",
+   "url": "https://developers.google.com/youtube/v3",
+   "confidence": "medium"
+  },
+  {
+   "rank": 9,
+   "name": "X API (pay-per-use)",
+   "category": "Official social API",
+   "covers": [
+    "X"
+   ],
+   "why": "Official, self-serve X data with no subscription. Useful for vendor launches, analysts, and influencers, though less central to B2B channel talk than Reddit or LinkedIn.",
+   "best_for": "Influencer activity and vendor announcements",
+   "cost": "Post reads $0.005 each, user reads $0.01. No minimum. New accounts get starter credit.",
+   "monthly": "About $150",
+   "caveat": "Lower B2B channel value per dollar than Reddit or LinkedIn sources.",
+   "setup_effort": "Low",
+   "integration": "API",
+   "url": "https://docs.x.com/x-api/getting-started/pricing",
+   "confidence": "high"
+  },
+  {
+   "rank": 10,
+   "name": "Syften",
+   "category": "Community alerts",
+   "covers": [
+    "Reddit",
+    "Hacker News",
+    "forums",
+    "Slack communities",
+    "YouTube (add-on)"
+   ],
+   "why": "Under-a-minute keyword alerts across Reddit, HN, and niche forums with AI filtering. A mid-priced alternative to F5Bot with wider forum coverage.",
+   "best_for": "Partner pain points and product feedback in niche communities",
+   "cost": "Recent listings: Standard $49.95/mo (20 filters, API), PRO $119.95/mo (100 filters, webhooks, MCP). Older listings show lower prices.",
+   "monthly": "$50-120",
+   "caveat": "Published prices conflict across sources. Data sourcing not disclosed. Reddit public API access ends March 2027; confirm how this vendor will source Reddit after that.",
+   "setup_effort": "Low",
+   "integration": "API",
+   "url": "https://syften.com",
+   "confidence": "low"
+  },
+  {
+   "rank": 11,
+   "name": "Brandwatch (or an existing Meltwater, Talkwalker, Sprinklr license)",
+   "category": "Enterprise listening suite",
+   "covers": [
+    "Reddit",
+    "X",
+    "YouTube",
+    "news",
+    "forums",
+    "reviews"
+   ],
+   "why": "Deep historical archives and analyst-grade tools, with a reported Reddit data partnership. Worth it mainly if TD SYNNEX corporate already holds a license that can be shared.",
+   "best_for": "Licensed Reddit history and executive brand reporting",
+   "cost": "Quote-based. Reported median about $50,000/yr; a UK government rate card lists Consumer Intelligence from GBP 10,800/yr.",
+   "monthly": "$1,600-6,800",
+   "caveat": "The Reddit partnership claim was not independently verified. Ask corporate communications what is already licensed.",
+   "setup_effort": "High",
+   "integration": "API",
+   "url": "https://www.brandwatch.com",
+   "confidence": "medium"
+  },
+  {
+   "rank": 12,
+   "name": "Bombora Company Surge (or G2 / TrustRadius buyer intent)",
+   "category": "B2B intent data",
+   "covers": [
+    "Account-level research activity"
+   ],
+   "why": "Shows which companies are researching topics like SASE or Copilot licensing right now. Conversation monitoring cannot provide account-level intent, so this complements the dashboard's buying signals.",
+   "best_for": "Buying signals for resellers and end customers",
+   "cost": "Quote-based. No published prices found.",
+   "monthly": "Quote",
+   "caveat": "Delivered mainly through CRM and marketing automation integrations.",
+   "setup_effort": "High",
+   "integration": "Platform, CRM",
+   "url": "https://bombora.com",
+   "confidence": "low"
+  },
+  {
+   "rank": 13,
+   "name": "Brand24",
+   "category": "Mid-market listening suite",
+   "covers": [
+    "Reddit",
+    "X",
+    "YouTube",
+    "LinkedIn",
+    "news",
+    "blogs",
+    "podcasts"
+   ],
+   "why": "Self-serve listening with broad coverage, built-in sentiment, and an API add-on. A fallback if a single managed vendor is preferred over Octolens.",
+   "best_for": "Broad brand sentiment and share of voice",
+   "cost": "Business $599/mo annually ($699 monthly): 25 keywords; API is a $99/mo add-on.",
+   "monthly": "About $700",
+   "caveat": "Keyword caps make 20+ keywords expensive.",
+   "setup_effort": "Low",
+   "integration": "API add-on",
+   "url": "https://brand24.com/pricing",
+   "confidence": "high"
+  }
+ ]
+}

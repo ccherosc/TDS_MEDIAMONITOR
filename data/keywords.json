@@ -1,0 +1,319 @@
+{
+ "schema": "media-monitor.keywords.v1",
+ "workspace": "tdsynnex-internal",
+ "updated_at": "2026-10-28T20:16:59Z",
+ "keywords": [
+  {
+   "id": "td-synnex",
+   "term": "TD SYNNEX",
+   "group": "Brand",
+   "query": "\"TD SYNNEX\" OR TDSYNNEX OR SYNNEX OR StreamOne OR \"Tech Data\" -Concentrix",
+   "subreddits": [
+    "msp",
+    "sysadmin",
+    "ITManagers",
+    "k12sysadmin",
+    "sales"
+   ],
+   "notes": "Partner experience: ordering, portal, support, credit, logistics, StreamOne, vendor programs.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 0,
+   "locked": true
+  },
+  {
+   "id": "ingram-micro",
+   "term": "Ingram Micro",
+   "group": "Distributor",
+   "query": "\"Ingram Micro\" OR Xvantage OR CloudBlue",
+   "subreddits": [
+    "msp",
+    "sysadmin"
+   ],
+   "notes": "Partner sentiment, Xvantage, trust after the 2025 ransomware outage.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 1
+  },
+  {
+   "id": "pax8",
+   "term": "Pax8",
+   "group": "Distributor",
+   "query": "Pax8 -gene -PAX8gene",
+   "subreddits": [
+    "msp"
+   ],
+   "notes": "MSP sentiment, marketplace and billing changes, support.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 2
+  },
+  {
+   "id": "dh-distributing",
+   "term": "D&H Distributing",
+   "group": "Distributor",
+   "query": "\"D&H Distributing\" OR \"D and H Distributing\"",
+   "subreddits": [
+    "msp",
+    "sysadmin"
+   ],
+   "notes": "SMB and MSP partner sentiment.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 3
+  },
+  {
+   "id": "arrow",
+   "term": "Arrow Electronics",
+   "group": "Distributor",
+   "query": "\"Arrow Electronics\" OR \"Arrow ECS\" OR ArrowSphere",
+   "subreddits": [
+    "msp",
+    "sysadmin"
+   ],
+   "notes": "Enterprise computing business, cloud marketplace.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 4
+  },
+  {
+   "id": "scansource",
+   "term": "ScanSource",
+   "group": "Distributor",
+   "query": "ScanSource OR Intelisys",
+   "subreddits": [
+    "msp",
+    "VOIP"
+   ],
+   "notes": "Partner sentiment, Intelisys advisors, UCaaS/CX.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 5
+  },
+  {
+   "id": "microsoft",
+   "term": "Microsoft",
+   "group": "Vendor",
+   "query": "\"Microsoft partner\" OR \"Microsoft CSP\" OR \"M365 licensing\" OR \"Microsoft 365 Copilot\" OR NCE -xbox",
+   "subreddits": [
+    "msp",
+    "sysadmin",
+    "Office365",
+    "AZURE"
+   ],
+   "notes": "Partner program, CSP, licensing and price changes, Copilot adoption.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 6
+  },
+  {
+   "id": "cisco",
+   "term": "Cisco",
+   "group": "Vendor",
+   "query": "Cisco OR Meraki OR Webex OR Splunk",
+   "subreddits": [
+    "networking",
+    "Cisco",
+    "meraki",
+    "sysadmin"
+   ],
+   "notes": "Licensing, security advisories, TAC, partner program.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 7
+  },
+  {
+   "id": "hp-inc",
+   "term": "HP Inc",
+   "group": "Vendor",
+   "query": "\"HP Inc\" OR EliteBook OR \"HP Wolf\" OR \"HP Amplify\"",
+   "subreddits": [
+    "sysadmin",
+    "msp"
+   ],
+   "notes": "Business PCs, printers, AI PCs, partner program.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 8
+  },
+  {
+   "id": "hpe",
+   "term": "HPE",
+   "group": "Vendor",
+   "query": "HPE OR \"Hewlett Packard Enterprise\" OR GreenLake OR Aruba OR Juniper",
+   "subreddits": [
+    "networking",
+    "sysadmin"
+   ],
+   "notes": "GreenLake, Aruba/Juniper networking, servers, partners.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 9
+  },
+  {
+   "id": "dell",
+   "term": "Dell",
+   "group": "Vendor",
+   "query": "\"Dell Technologies\" OR Latitude OR PowerEdge OR \"Dell Pro\"",
+   "subreddits": [
+    "sysadmin",
+    "Dell"
+   ],
+   "notes": "Business PCs, AI servers, ProSupport, pricing.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 10
+  },
+  {
+   "id": "lenovo",
+   "term": "Lenovo",
+   "group": "Vendor",
+   "query": "Lenovo OR ThinkPad OR ThinkSystem",
+   "subreddits": [
+    "sysadmin",
+    "Lenovo",
+    "thinkpad"
+   ],
+   "notes": "Business PCs, AI PCs, servers, warranty, firmware.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 11
+  },
+  {
+   "id": "apple",
+   "term": "Apple",
+   "group": "Vendor",
+   "query": "\"Apple Business Manager\" OR \"Apple in the enterprise\" OR \"Mac fleet\" OR \"Apple Business\"",
+   "subreddits": [
+    "macsysadmin",
+    "sysadmin"
+   ],
+   "notes": "Apple in the enterprise, MDM, device management.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 12
+  },
+  {
+   "id": "palo-alto-networks",
+   "term": "Palo Alto Networks",
+   "group": "Security",
+   "query": "\"Palo Alto Networks\" OR Prisma OR Cortex OR GlobalProtect",
+   "subreddits": [
+    "paloaltonetworks",
+    "networking",
+    "cybersecurity"
+   ],
+   "notes": "Vulnerabilities, platformization pricing, SASE.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 13
+  },
+  {
+   "id": "fortinet",
+   "term": "Fortinet",
+   "group": "Security",
+   "query": "Fortinet OR FortiGate OR FortiOS",
+   "subreddits": [
+    "fortinet",
+    "networking",
+    "msp"
+   ],
+   "notes": "Patching, firmware quality, value, SD-WAN.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 14
+  },
+  {
+   "id": "crowdstrike",
+   "term": "CrowdStrike",
+   "group": "Security",
+   "query": "CrowdStrike OR \"Falcon sensor\"",
+   "subreddits": [
+    "crowdstrike",
+    "cybersecurity",
+    "msp"
+   ],
+   "notes": "Trust, pricing, switching vs SentinelOne/Defender.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 15
+  },
+  {
+   "id": "ai-pcs",
+   "term": "AI PCs",
+   "group": "Technology",
+   "query": "\"AI PC\" OR \"Copilot+ PC\" OR \"NPU laptop\"",
+   "subreddits": [
+    "sysadmin",
+    "ITManagers"
+   ],
+   "notes": "Refresh intent, skepticism, pricing, memory costs.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 16
+  },
+  {
+   "id": "agentic-ai",
+   "term": "Agentic AI",
+   "group": "Technology",
+   "query": "\"agentic AI\" OR \"AI agents\" enterprise OR \"Copilot agents\"",
+   "subreddits": [
+    "ITManagers",
+    "msp",
+    "artificial"
+   ],
+   "notes": "What IT teams deploy, governance and security worries.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 17
+  },
+  {
+   "id": "cloud-marketplace",
+   "term": "Cloud marketplace",
+   "group": "Technology",
+   "query": "\"AWS Marketplace\" OR \"Azure Marketplace\" OR \"Microsoft Marketplace\" OR \"private offer\"",
+   "subreddits": [
+    "aws",
+    "AZURE",
+    "msp"
+   ],
+   "notes": "Procurement via marketplaces, channel role.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 18
+  },
+  {
+   "id": "msp-tools",
+   "term": "MSP tools",
+   "group": "Technology",
+   "query": "ConnectWise OR Kaseya OR NinjaOne OR N-able OR Datto",
+   "subreddits": [
+    "msp"
+   ],
+   "notes": "RMM/PSA sentiment, price increases, switching, breaches.",
+   "status": "active",
+   "added_at": "2026-10-28T18:30:00Z",
+   "added_by": "setup",
+   "order": 19
+  }
+ ]
+}
