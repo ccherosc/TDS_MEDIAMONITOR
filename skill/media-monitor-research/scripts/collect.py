@@ -20,6 +20,7 @@ Examples
   python collect.py --keywords keywords.json --days 30 --out raw
   python collect.py --keywords https://raw.githubusercontent.com/ccherosc/TDS_MEDIAMONITOR/main/data/keywords.json
   python collect.py --keywords keywords.json --sources reddit,hn --only td-synnex,pax8
+  python collect.py --keywords keywords.json --platform-focus reddit      # Reddit-only run
 
 Standard library only. Python 3.9+.
 """
@@ -334,6 +335,8 @@ def main(argv=None, http=None):
     ap.add_argument("--days", type=int, default=30)
     ap.add_argument("--out", default="raw")
     ap.add_argument("--sources", default="reddit,hn,youtube")
+    ap.add_argument("--platform-focus", choices=["all", "reddit", "youtube", "others"],
+                    help="shortcut for --sources: reddit, youtube, or others (Hacker News here; add web search for forums, reviews, news)")
     ap.add_argument("--only", default="", help="comma-separated keyword ids")
     ap.add_argument("--max-per-keyword", type=int, default=25)
     ap.add_argument("--comments", type=int, default=15)
@@ -345,7 +348,8 @@ def main(argv=None, http=None):
         keep = set(a.only.split(","))
         kws = [k for k in kws if k["id"] in keep]
     since = dt.date.today() - dt.timedelta(days=a.days)
-    srcs = set(a.sources.split(","))
+    focus_map = {"all": "reddit,hn,youtube", "reddit": "reddit", "youtube": "youtube", "others": "hn"}
+    srcs = set((focus_map[a.platform_focus] if a.platform_focus else a.sources).split(","))
     by_url = {}
     report = {}
     for kw in kws:
@@ -372,6 +376,7 @@ def main(argv=None, http=None):
         download_images(http, cands, os.path.join(a.out, "images"), a.images)
     os.makedirs(a.out, exist_ok=True)
     out = {"collected_at": dt.datetime.now(dt.timezone.utc).isoformat(), "window_days": a.days, "since": since.isoformat(),
+           "platform_focus": a.platform_focus or "all",
            "sources": sorted(srcs), "per_keyword": report, "candidates": cands}
     path = os.path.join(a.out, "candidates.json")
     with open(path, "w", encoding="utf-8") as f:

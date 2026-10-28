@@ -11436,8 +11436,9 @@
     "Package Destination AI SMB tools and the free StreamOne AI Skills Marketplace for cloud-first MSPs weighing Pax8. It's a concrete AI practice offer with partner-earned consumption.",
     "Position BlueStar and expanded IBM coverage as one-stop broadline plus specialty sourcing for partners that currently split purchasing across distributors."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "ingram-micro": {
    "keyword_id": "ingram-micro",
@@ -11517,8 +11518,9 @@
     "The breach disclosure keeps distributor cyber-resilience on partners' minds; publishing TD SYNNEX's own security posture builds trust.",
     "Use the HPE/Juniper overlap to differentiate on enablement and services depth rather than price."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "arrow": {
    "keyword_id": "arrow",
@@ -11568,8 +11570,9 @@
     "Partners who want continuity during Arrow's leadership transition can be offered a stable alternative, without disparaging Arrow.",
     "Partners making direct-to-indirect Microsoft transitions need hands-on enablement; position StreamOne and Microsoft practice support."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "scansource": {
    "keyword_id": "scansource",
@@ -11631,8 +11634,9 @@
     "Once closed, BlueStar gives TD SYNNEX a specialty AIDC/POS platform to court barcode, mobility and POS resellers.",
     "Less Intelisys disclosure may leave advisors open to alternatives; consider advisor-channel outreach where TD SYNNEX has offerings."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "pax8": {
    "keyword_id": "pax8",
@@ -11710,8 +11714,9 @@
     "49% of AI-paying SMBs report bill surprises, and Copilot Business moves to usage-based billing by default on Dec 1. That opens room for TD SYNNEX AI cost-visibility tooling and MSP enablement.",
     "Engage GTIA's vendor-neutral Managed Intelligence Alliance so the MSP AI standard isn't written mainly by Pax8."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "dh-distributing": {
    "keyword_id": "dh-distributing",
@@ -11761,8 +11766,9 @@
     "D&H's HPE networking program is new, so partners may be comparing enablement depth now. Brief sales on where TD SYNNEX can show deeper networking resources.",
     "No D&H partner complaints surfaced, so compete on scale, breadth and cloud tooling rather than on service gaps."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "microsoft": {
    "keyword_id": "microsoft",
@@ -11853,8 +11859,9 @@
     "Help MSPs win EA-to-CSP transitions with licensing expertise and growth-margin modelling.",
     "Use the same change-of-partner rule to recruit resellers from other distributors."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "cisco": {
    "keyword_id": "cisco",
@@ -11917,8 +11924,9 @@
     "Help resellers capture Cisco 360's higher ACV-growth and adopt incentives with deal-registration and estimator support.",
     "Use the doubled 14-day UCS price protection in compute quotes."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "hp-inc": {
    "keyword_id": "hp-inc",
@@ -11981,8 +11989,9 @@
     "Target local-AI developers and AI workstation buyers (OmniBook Ultra 16, GB10 systems) with specialist bundles.",
     "Offer HP Anyware customers a migration path before 2029 support ends (VDI, Windows 365, HP Z RGS)."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "hpe": {
    "keyword_id": "hpe",
@@ -12055,8 +12064,9 @@
     "Promote HPE's quote-to-ship price lock as a selling point when hardware quotes are volatile.",
     "Build VMware-exit bundles around VM Essentials, ProLiant and Alletra for reseller customers."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "dell": {
    "keyword_id": "dell",
@@ -12136,8 +12146,9 @@
     "Offer partners firmware and driver deployment guidance (Dell Command Update, driver pinning, ThinOS upgrade paths) as a services add-on.",
     "Promote flat-price ordering portals and PC-as-a-Service financing to mid-size buyers who say Dell procurement is cumbersome."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "lenovo": {
    "keyword_id": "lenovo",
@@ -12201,8 +12212,9 @@
     "Attach ThinkShield TraceLock and AI-usage governance to Think-family AI PC refresh quotes.",
     "Steer ESG-focused partners to the Lenovo 360 Circle decarbonization path for public sector and enterprise bids."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "apple": {
    "keyword_id": "apple",
@@ -12290,8 +12302,9 @@
     "Use enterprise Mac share gains to push Mac-as-a-Service, lifecycle and AppleCare+ for Business attach.",
     "Position built-in Apple Business MDM for very small fleets, with a clear upgrade path to full MDM as compliance needs grow."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "palo-alto-networks": {
    "keyword_id": "palo-alto-networks",
@@ -12371,8 +12384,9 @@
     "Help partners build MSSP practices on NextWave's new predictable MSSP pricing.",
     "Pitch Prisma Access migrations to customers tired of patching on-prem VPN gateways."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "fortinet": {
    "keyword_id": "fortinet",
@@ -12444,8 +12458,9 @@
     "Lean on FortiGate's value and SD-WAN strengths with price-sensitive mid-market buyers who are comparing against Palo Alto.",
     "Help partners escalate long-running TAC cases through the distributor's Fortinet team."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "crowdstrike": {
    "keyword_id": "crowdstrike",
@@ -12529,8 +12544,9 @@
     "Pair Falcon Complete for Service Providers with partner MDR practices for mid-market accounts.",
     "Use the positive review momentum on detection and support in partner campaigns."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "ai-pcs": {
    "keyword_id": "ai-pcs",
@@ -12610,8 +12626,9 @@
     "Give partners price-protection, allocation and forward-buy guidance while quote volatility persists.",
     "Bundle endpoint and agent governance services with Copilot+ deployments through MSP partners."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "agentic-ai": {
    "keyword_id": "agentic-ai",
@@ -12690,8 +12707,9 @@
     "Promote security-first Copilot bundles (Business Premium plus Copilot) to SMBs via CSP partners as Microsoft raises incentives.",
     "Enable co-sell and private-offer motions for agents listed in hyperscaler marketplaces."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "cloud-marketplace": {
    "keyword_id": "cloud-marketplace",
@@ -12757,8 +12775,9 @@
     "Help partners with VMware-on-Azure transitions (VCF BYOL) as license-included AVS ends October 31, 2026.",
     "Act as orchestrator for AI-agent marketplace listings: ISV aggregation, bundling and settlement."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   },
   "msp-tools": {
    "keyword_id": "msp-tools",
@@ -12825,10 +12844,12 @@
     "Offer consolidated multi-vendor operations and billing through the distributor platform to reduce tool sprawl.",
     "Support the MSP M&A wave (e.g., Previder-Wanstor) with standardized stacks, migration services and financing."
    ],
+   "focus": "all",
    "run_id": "run-2026-10-28-baseline",
-   "updated_at": "2026-10-28T20:16:59Z"
+   "updated_at": "2026-10-28T20:31:48Z"
   }
  },
+ "keyword_insights_by_focus": {},
  "runs": [
   {
    "id": "run-2026-10-28-baseline",
@@ -12854,6 +12875,7 @@
     "linkedin": "none"
    },
    "notes": "Baseline pulled with web search from a cloud workspace that cannot reach the Reddit, YouTube or Hacker News APIs. Community coverage comes from forums and review sites; run the collector for Reddit depth.",
+   "platform_focus": "all",
    "keyword_ids": [
     "td-synnex",
     "ingram-micro",
@@ -14058,8 +14080,8 @@
      }
     ]
    },
-   "imported_at": "2026-10-28T20:16:59Z"
+   "imported_at": "2026-10-28T20:31:48Z"
   }
  ],
- "updated_at": "2026-10-28T20:16:59Z"
+ "updated_at": "2026-10-28T20:31:48Z"
 }

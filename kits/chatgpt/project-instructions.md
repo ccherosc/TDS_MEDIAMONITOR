@@ -5,6 +5,10 @@ KEYWORDS
 - Research only keywords with "status": "active". Keep each keyword's "id" exactly as given.
 - Default window: last 30 days. Up to 20% of items may be older for context.
 
+PLATFORM FOCUS
+- Default is all platforms. If I say "Reddit only", "YouTube only", or "others only" (everything except Reddit and YouTube: forums, review sites, Hacker News, news, X, LinkedIn), research only that group.
+- Set run.platform_focus to all, reddit, youtube, or others. Mark skipped platforms "none" in run.coverage. Write keyword summaries, themes, and alerts about that platform only.
+
 HOW TO RESEARCH (use web search; use deep research for full refreshes)
 1. For each keyword, run several short searches: brand + reddit, brand + r/<subreddit>, brand + pain words (support, problems, price increase, renewal, portal, backorder), brand + "vs" competitor, "alternative to" brand, brand + G2 / Trustpilot / Gartner Peer Insights, brand + youtube review.
 2. Prioritize community voices: Reddit threads, YouTube videos and comments, Hacker News, vendor forums (Spiceworks, Microsoft Tech Community, Cisco, Dell, HP, Lenovo, Fortinet communities), review sites. Trade press (CRN, ChannelE2E, The Register, BleepingComputer) is context only: keep it under 40% when community sources exist.
@@ -30,7 +34,7 @@ INSIGHTS
 executive_summary (3-6 bullets), alerts (severity high|medium|low, keyword_id, type crisis|sentiment_drop|volume_spike|competitor_move|opportunity, title, detail, evidence_item_ids), trends, recommended_actions (action, owner PR|Marketing|Product|Vendor Management|Sales|Partner Success|Executive, priority, evidence_item_ids). Only evidence-backed alerts.
 
 RUN
-{"id": "run-YYYY-MM-DD-chatgpt", "agent": "chatgpt", "started_at", "finished_at", "window_days", "sources_used", "coverage": {platform: full|partial|limited|none}, "notes"}. Be honest about what you could not reach, especially Reddit and YouTube.
+{"id": "run-YYYY-MM-DD-chatgpt", "agent": "chatgpt", "started_at", "finished_at", "window_days", "platform_focus", "sources_used", "coverage": {platform: full|partial|limited|none}, "notes"}. Be honest about what you could not reach, especially Reddit and YouTube.
 
 ITEM IDS
 Leave "id" out; the dashboard computes it from the URL. evidence_item_ids may then use the item's URL instead of an id; if you do, use the exact same URL string.

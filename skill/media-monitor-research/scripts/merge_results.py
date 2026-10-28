@@ -34,6 +34,16 @@ ASPECTS = {"pricing", "margins", "support", "portal", "logistics", "licensing", 
 STAGES = {"none", "research", "evaluating", "ready_to_buy"}
 INFLUENCE = {"low", "medium", "high"}
 DROP_PARAMS = ("utm_", "ref", "ref_source")
+FOCUS = {"all", "reddit", "youtube", "others"}
+
+
+def norm_focus(v):
+    """Platform focus of a run: all (default), reddit, youtube, or others (everything else)."""
+    if isinstance(v, list):
+        v = v[0] if len(v) == 1 else "all"
+    v = str(v or "all").lower()
+    v = "others" if v == "other" else v
+    return v if v in FOCUS else "all"
 
 
 def now_iso():
@@ -188,10 +198,16 @@ def normalize_payload(p: dict, problems: list) -> dict:
     run.setdefault("id", "run-" + dt.date.today().isoformat() + "-" + hashlib.sha1(json.dumps(sorted(ids)).encode()).hexdigest()[:6])
     run.setdefault("agent", "other")
     run.setdefault("finished_at", now_iso())
+    run["platform_focus"] = norm_focus(run.get("platform_focus"))
+    focus = run["platform_focus"]
+    if focus != "all":
+        outside = [x for x in items if (x["platform"] if x["platform"] in ("reddit", "youtube") else "others") != focus]
+        if outside:
+            problems.append(f"{len(outside)} item(s) are outside the run's platform focus ({focus}); kept, but check the run")
     return {"schema": SCHEMA, "workspace": p.get("workspace") or WORKSPACE, "run": run, "keywords": kws, "items": items, "insights": ins}
 
 
-def combine(payloads, agent, window_days, coverage, notes, run_id):
+def combine(payloads, agent, window_days, coverage, notes, run_id, platform_focus="all"):
     items, kws, ins = {}, {}, {"executive_summary": [], "alerts": [], "trends": [], "recommended_actions": []}
     for p in payloads:
         for it in p["items"]:
@@ -207,7 +223,8 @@ def combine(payloads, agent, window_days, coverage, notes, run_id):
         a["id"] = a.get("id") if a.get("id") and sum(1 for b in ins["alerts"] if b.get("id") == a.get("id")) == 1 else f"alert-{n}"
     started = now_iso()
     run = {"id": run_id or f"run-{dt.date.today().isoformat()}-{agent}", "agent": agent, "started_at": started, "finished_at": started,
-           "window_days": window_days, "sources_used": sorted({i["platform"] for i in items.values()}), "coverage": coverage, "notes": notes}
+           "window_days": window_days, "platform_focus": norm_focus(platform_focus),
+           "sources_used": sorted({i["platform"] for i in items.values()}), "coverage": coverage, "notes": notes}
     return {"schema": SCHEMA, "workspace": WORKSPACE, "run": run, "keywords": list(kws.values()), "items": list(items.values()), "insights": ins}
 
 
@@ -232,11 +249,18 @@ def merge_into_store(store: dict, payload: dict) -> dict:
             by_id[it["id"]] = {**it, "first_seen": today, "last_seen": today, "run_ids": [run_id]}
     store["items"] = sorted(by_id.values(), key=lambda i: i.get("published_at", ""), reverse=True)
     stamp = now_iso()
+    focus = norm_focus(payload["run"].get("platform_focus"))
     kwi = store.get("keyword_insights") or {}
+    by_focus = store.get("keyword_insights_by_focus") or {}
     for k in payload["keywords"]:
-        kwi[k["id"]] = {"keyword_id": k["id"], "term": k.get("term", k["id"]), "summary": k.get("summary", ""), "themes": k.get("themes") or [],
-                        "risks": k.get("risks") or [], "opportunities": k.get("opportunities") or [], "run_id": run_id, "updated_at": stamp}
+        entry = {"keyword_id": k["id"], "term": k.get("term", k["id"]), "summary": k.get("summary", ""), "themes": k.get("themes") or [],
+                 "risks": k.get("risks") or [], "opportunities": k.get("opportunities") or [], "focus": focus, "run_id": run_id, "updated_at": stamp}
+        if focus == "all":
+            kwi[k["id"]] = entry          # the main read-out
+        else:
+            by_focus.setdefault(focus, {})[k["id"]] = entry   # shown when the dashboard is filtered to that platform
     store["keyword_insights"] = kwi
+    store["keyword_insights_by_focus"] = by_focus
     run = dict(payload["run"], keyword_ids=[k["id"] for k in payload["keywords"]], item_count=len(payload["items"]),
                insights=payload.get("insights") or {}, imported_at=stamp)
     store["runs"] = [run] + [r for r in store.get("runs") or [] if r.get("id") != run_id][:59]
@@ -249,6 +273,7 @@ def report(payload, problems):
     plat = Counter(i["platform"] for i in payload["items"])
     sent = Counter(i["sentiment"]["label"] for i in payload["items"])
     kw = Counter(k for i in payload["items"] for k in i["keyword_ids"])
+    print(f"Run: {payload['run']['id']}  Platform focus: {payload['run'].get('platform_focus', 'all')}")
     print(f"Items: {len(payload['items'])}  Keywords with summaries: {len(payload['keywords'])}")
     print("By platform:", dict(plat))
     print("By sentiment:", dict(sent))
@@ -278,6 +303,7 @@ def main():
     cb.add_argument("--run-id")
     cb.add_argument("--coverage", default="", help="e.g. reddit=full,youtube=partial,news=partial")
     cb.add_argument("--notes", default="")
+    cb.add_argument("--platform-focus", default="all", choices=sorted(FOCUS))
     m = sub.add_parser("merge")
     m.add_argument("file")
     m.add_argument("--store", required=True)
@@ -293,7 +319,7 @@ def main():
         for f in a.files:
             parts.append(normalize_payload(load(f), probs))
         cov = dict(kv.split("=", 1) for kv in a.coverage.split(",") if "=" in kv)
-        p = combine(parts, a.agent, a.window_days, cov, a.notes, a.run_id)
+        p = combine(parts, a.agent, a.window_days, cov, a.notes, a.run_id, a.platform_focus)
         with open(a.out, "w", encoding="utf-8") as f:
             json.dump(p, f, indent=1, ensure_ascii=False)
         report(p, probs)

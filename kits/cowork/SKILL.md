@@ -12,9 +12,9 @@ Works in any agent that can read this file: Claude (claude.ai, Claude Code), Mic
 ## Running in Microsoft Copilot Cowork
 
 - Cowork follows these instructions with its own web research and Deep Research. Skip every step marked **[code]**; the Python scripts in `scripts/` are for hosts that can run code.
-- Deliver with Route B in references/delivery.md: save `media-monitor-results-YYYY-MM-DD.json` to OneDrive in `Media Monitor/results/`, then tell the user it is ready to load in the dashboard (Update data > Load results).
+- Deliver with Route B in references/delivery.md: save `media-monitor-results-YYYY-MM-DD.json` (add `-reddit`, `-youtube`, or `-others` for a focused run) to OneDrive in `Media Monitor/results/`, then tell the user it is ready to load in the dashboard (Update data > Load results).
 - Never send email, post in Teams, or reply on any website as part of this skill. Reply drafts stay in the results file for a human to review.
-- To run it on a schedule, the user can add a prompt in Cowork's Automations tab, for example: "Run the media-monitor-research skill for the keywords in OneDrive Media Monitor/keywords.json for the last 7 days and save the results file."
+- To run it on a schedule, the user can add a prompt in Cowork's Automations tab, for example: "Run the media-monitor-research skill, Reddit only, for the keywords in OneDrive Media Monitor/keywords.json for the last 7 days and save the results file."
 
 ## Reference files (read when the step says so)
 
@@ -34,7 +34,8 @@ Works in any agent that can read this file: Claude (claude.ai, Claude Code), Mic
      **[code]** `python scripts/github_sync.py pull-keywords --out keywords.json`
    Research only keywords with `"status": "active"`. Each keyword has `id`, `term`, `group`, `query` (search string), `subreddits`, and `notes` (what the team cares about). Keep the `id` values exactly; the dashboard matches on them.
 2. **Window.** Default the last 30 days. The user may say otherwise. Older items only as context (under 20%).
-3. **Previous results (optional, for momentum).** `https://raw.githubusercontent.com/ccherosc/TDS_MEDIAMONITOR/main/data/results.json` holds earlier runs. Use it to label themes rising, steady, or fading and to detect sentiment shifts.
+3. **Platform focus.** Default `all`. The user (or the dashboard prompt) may ask for `reddit`, `youtube`, or `others` (everything except Reddit and YouTube: forums, review sites, Hacker News, news, X, LinkedIn). For a focused run: collect only from that platform group, set `run.platform_focus`, mark the other platforms `none` in `run.coverage`, and write keyword summaries, themes, and alerts about that platform only. The dashboard keeps focused summaries separate, so a Reddit-only run never replaces the all-platform read-out.
+4. **Previous results (optional, for momentum). `https://raw.githubusercontent.com/ccherosc/TDS_MEDIAMONITOR/main/data/results.json` holds earlier runs. Use it to label themes rising, steady, or fading and to detect sentiment shifts.
 
 ## Workflow
 
@@ -45,8 +46,9 @@ These steps run in order. Track progress with a checklist if your host supports 
 3. **Collect.**
    - **[code]** Run the collector first:
      `python scripts/collect.py --keywords keywords.json --days 30 --out raw`
+     For a focused run add `--platform-focus reddit` (or `youtube`, `others`).
      It pulls Reddit posts with their top comments, Hacker News stories and comments, and YouTube videos with stats and top comments (when `YOUTUBE_API_KEY` is set), and saves post images and thumbnails to `raw/images/` for vision. See the script header for credentials.
-   - **Always** run web search sweeps too (sources.md): community forums, review sites, YouTube, and Reddit threads the collector missed. Use several short queries per keyword rather than one long one.
+   - **Always** run web search sweeps too (sources.md), limited to the platform focus: community forums, review sites, YouTube, and Reddit threads the collector missed. Use several short queries per keyword rather than one long one.
    - Open every candidate page. Read the comments, not just the post: the top replies usually carry the real sentiment and the fixes or workarounds.
 4. **Screen.** Keep an item only if it is really about the keyword, has a verifiable date, and adds signal. Drop vendor press releases unless the reaction to them is the story. One item per URL; if it matches two keywords, list both ids.
 5. **Analyze each item** with methodology.md: sentiment toward each tracked keyword it mentions, emotion, aspects, signals, intent stage, influence. Write a paraphrased summary and at most one short verbatim excerpt (20 words max).
@@ -77,7 +79,8 @@ Quality beats volume. Ten well-read threads with their comments beat forty headl
 
 ## Self-check before delivering
 
-- [ ] `schema` is `media-monitor.v1`, `workspace` is `tdsynnex-internal`, `run.id` is unique (for example `run-2026-11-04-claude`).
+- [ ] `schema` is `media-monitor.v1`, `workspace` is `tdsynnex-internal`, `run.id` is unique (for example `run-2026-11-04-claude` or `run-2026-11-04-claude-reddit`).
+- [ ] `run.platform_focus` matches what was asked, and every item belongs to that platform group.
 - [ ] Every keyword id matches the dashboard list.
 - [ ] Every item has url, title, published_at, platform, keyword_ids, summary, sentiment.
 - [ ] Mixed-sentiment multi-brand items use `keyword_sentiment`.

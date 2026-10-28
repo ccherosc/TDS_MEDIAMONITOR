@@ -24,6 +24,7 @@ Agents supply evidence and judgment. The dashboard does the math.
   "started_at": "2026-10-28T14:00:00Z",
   "finished_at": "2026-10-28T15:10:00Z",
   "window_days": 90,
+  "platform_focus": "all",
   "sources_used": ["reddit", "youtube", "hackernews", "forum", "review", "news"],
   "coverage": { "reddit": "full", "youtube": "partial", "hackernews": "full", "forum": "partial", "review": "partial", "news": "partial", "x": "none" },
   "notes": "Reddit collected via public JSON. YouTube via Data API (key present)."
@@ -31,6 +32,7 @@ Agents supply evidence and judgment. The dashboard does the math.
 ```
 
 agent: claude | chatgpt | cowork | script | other
+platform_focus: all (default) | reddit | youtube | others. "others" means every platform except Reddit and YouTube (forums, review sites, Hacker News, news, X, LinkedIn). A focused run should only contain items from that platform group, mark the rest "none" in coverage, and write keyword summaries about that platform only. The dashboard stores focused summaries separately and shows them when its platform filter matches, so a Reddit-only run never overwrites the all-platform read-out.
 coverage values: full | partial | limited | none
 
 ## keywords[]

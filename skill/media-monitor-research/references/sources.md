@@ -1,5 +1,13 @@
 # Sources and search playbook
 
+## Platform groups (matches the dashboard filter)
+
+| Filter | Platforms |
+|---|---|
+| Reddit | reddit |
+| YouTube | youtube |
+| Others | forum, review, hackernews, news, x, linkedin, podcast, other |
+
 ## Query expansion
 
 For each keyword, build several short queries instead of one long one.

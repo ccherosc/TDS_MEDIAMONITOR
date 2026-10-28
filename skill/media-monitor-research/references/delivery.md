@@ -9,7 +9,7 @@ Its data is in the repo `ccherosc/TDS_MEDIAMONITOR`, folder `data/`:
 | data/results.json | Every conversation, keyword summary, and research run |
 | data/state.json | Which conversations were marked responded or dismissed |
 
-Every route below ends with the same merge rules: same URL = same conversation, newest keyword summaries win, run history is kept.
+Every route below ends with the same merge rules: same URL = same conversation, newest keyword summaries win, run history is kept. Runs with a `platform_focus` other than `all` keep their keyword summaries in `keyword_insights_by_focus`, so they never replace the all-platform summaries.
 
 ## Route A: you can run code and reach GitHub (Claude Code, Claude with code execution, Codex, Cursor)
 

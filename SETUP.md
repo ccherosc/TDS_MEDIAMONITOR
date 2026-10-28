@@ -29,7 +29,7 @@ Same URL = same conversation, so loading overlapping results never double counts
 
 | Step | Where |
 |---|---|
-| Check alerts and Needs attention | Overview |
+| Check alerts and Needs attention (use the platform filter for a Reddit-only or YouTube-only view) | Overview |
 | Work the reply queue: open source, copy suggested reply, post from your own account, Mark responded | Conversations > Status: Needs response |
 | Copy the executive brief into email or Teams | Advanced > Executive brief |
 | Export conversations to Excel when needed | Update data > Sync & export > Download conversations (.csv) |

@@ -11,6 +11,10 @@ One skill, three ways to run it. All of them produce the same results file, and 
 
 Best depth: Claude Code on a computer with internet, because the collector reads Reddit threads with their top comments.
 
+## Platform focus (all kits)
+
+Every kit can research all platforms or one group: **Reddit only**, **YouTube only**, or **Others** (forums, review sites, Hacker News, news). Pick it in the dashboard under Update data > Run research and the prompt says so. Focused runs keep their own keyword summaries, which appear when you set the dashboard's platform filter to match. Claude Code collector: `python scripts/collect.py --keywords keywords.json --platform-focus reddit`.
+
 ## Claude Code
 
 1. Unzip `media-monitor-research.zip` into `~/.claude/skills/` (so you have `~/.claude/skills/media-monitor-research/SKILL.md`).

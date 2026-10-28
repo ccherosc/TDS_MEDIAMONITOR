@@ -387,6 +387,12 @@ svg.chart .quad{fill:var(--muted);font-size:11px;font-weight:600;letter-spacing:
         <button type="button" data-win="90">90 days</button>
         <button type="button" data-win="0">All</button>
       </div>
+      <div class="seg" role="group" aria-label="Platform" id="platSeg">
+        <button type="button" data-plat="all">All platforms</button>
+        <button type="button" data-plat="reddit">Reddit</button>
+        <button type="button" data-plat="youtube">YouTube</button>
+        <button type="button" data-plat="others">Others</button>
+      </div>
     </div>
     <div id="subline" class="subline"></div>
     <div id="banner"></div>
@@ -446,14 +452,17 @@ function icon(p){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentCol
 
 /* ================= State ================= */
 const S={
-  route:'overview', scope:'all', win:90, mode:'loading', canEdit:false, me:null, meLabel:'',
+  route:'overview', scope:'all', win:90, plat:'all', runPlat:'all', mode:'loading', canEdit:false, me:null, meLabel:'',
   base:{keywords:null,results:null,state:null,upgrades:null},
-  over:{keywords:null,items:[],kwins:{},runs:[],state:{}},
+  over:{keywords:null,items:[],kwins:{},kwinsFocus:{reddit:{},youtube:{},others:{}},runs:[],state:{}},
   keywords:[], items:[], kwins:{}, runs:[], state:{}, upgrades:null,
   conv:{platform:'all',sentiment:'all',signal:'all',status:'all',q:'',sort:'priority',limit:30},
   advKw:null, modalTab:'run', modalAgent:'claude', pendingImport:null, confirmDel:null,
   respOpen:new Set()
 };
+const PLAT_FILTERS={all:'All platforms',reddit:'Reddit',youtube:'YouTube',others:'Other platforms'};
+function normFocus(v){if(Array.isArray(v))v=v.length===1?v[0]:'all';v=String(v||'all').toLowerCase();if(v==='other')v='others';return PLAT_FILTERS[v]?v:'all';}
+{const sp=(function(){try{return localStorage.getItem('mm_plat')}catch(e){return null}})();if(PLAT_FILTERS[sp])S.plat=sp;}
 
 /* ================= Utilities ================= */
 const $=(s,el=document)=>el.querySelector(s);
@@ -537,24 +546,30 @@ function assemble(){
   S.items=Array.from(map.values()).sort((a,b)=>String(b.published_at).localeCompare(String(a.published_at)));
   S.kwins=Object.assign({},br.keyword_insights||{});
   for(const [k,v] of Object.entries(S.over.kwins||{})){if(!S.kwins[k]||String(v.updated_at||'')>=String(S.kwins[k].updated_at||''))S.kwins[k]=v;}
+  S.kwinsFocus={reddit:{},youtube:{},others:{}};const bf=br.keyword_insights_by_focus||{};const ofc=S.over.kwinsFocus||{};
+  for(const f of ['reddit','youtube','others']){Object.assign(S.kwinsFocus[f],bf[f]||{});for(const [k,v] of Object.entries(ofc[f]||{})){const cur=S.kwinsFocus[f][k];if(!cur||String(v.updated_at||'')>=String(cur.updated_at||''))S.kwinsFocus[f][k]=v;}}
   const rmap=new Map();for(const r of [...(br.runs||[]),...(S.over.runs||[])])if(r&&r.id)rmap.set(r.id,r);
   S.runs=Array.from(rmap.values()).sort((a,b)=>String(b.finished_at||b.started_at||'').localeCompare(String(a.finished_at||a.started_at||'')));
   S.state=Object.assign({},(S.base.state&&S.base.state.items)||{},S.over.state||{});
   S.kwById=Object.fromEntries(S.keywords.map(k=>[k.id,k]));
+  S.itemById=Object.fromEntries(S.items.map(i=>[i.id,i]));
   S.tracked=new Set(S.keywords.map(k=>k.id));
   if(S.scope!=='all'&&!S.tracked.has(S.scope))S.scope='all';
 }
 function visible(){return S.items.filter(it=>(it.keyword_ids||[]).some(k=>S.tracked.has(k)));}
 function inWin(it){return !S.win||daysAgo(it.published_at)<=S.win;}
-function scoped(){return visible().filter(it=>inWin(it)&&(S.scope==='all'||(it.keyword_ids||[]).includes(S.scope)));}
-function kwItems(id,all){return visible().filter(it=>(it.keyword_ids||[]).includes(id)&&(all||inWin(it)));}
+function platGroup(p){return p==='reddit'?'reddit':p==='youtube'?'youtube':'others';}
+function platOk(it){return S.plat==='all'||platGroup(it.platform)===S.plat;}
+function kwinsFor(id){if(S.plat!=='all'){const f=S.kwinsFocus&&S.kwinsFocus[S.plat]&&S.kwinsFocus[S.plat][id];if(f)return f;}return S.kwins[id];}
+function scoped(){return visible().filter(it=>inWin(it)&&platOk(it)&&(S.scope==='all'||(it.keyword_ids||[]).includes(S.scope)));}
+function kwItems(id,all,anyPlat){return visible().filter(it=>(it.keyword_ids||[]).includes(id)&&(all||inWin(it))&&(anyPlat||platOk(it)));}
 function statusOf(id){return (S.state[id]&&S.state[id].status)||'open';}
 function needsResponse(list){const pr={high:0,medium:1,low:2};return list.filter(it=>it.response&&it.response.recommended&&statusOf(it.id)==='open').sort((a,b)=>(pr[a.response.priority]??3)-(pr[b.response.priority]??3)||String(b.published_at).localeCompare(String(a.published_at)));}
 function latestRun(){return S.runs[0]||null;}
 function coverage(p){const r=latestRun();const c=r&&r.coverage&&r.coverage[p];return c||null;}
 function allAlerts(){
   const out=[];const seen=new Set();
-  for(const r of S.runs){for(const a of ((r.insights&&r.insights.alerts)||[])){const key=(a.title||'')+'|'+(a.keyword_id||'');if(seen.has(key))continue;seen.add(key);if(a.keyword_id&&!S.tracked.has(a.keyword_id))continue;out.push(Object.assign({source:'agent',run_id:r.id,run_date:(r.finished_at||r.started_at||'').slice(0,10)},a));}}
+  for(const r of S.runs){for(const a of ((r.insights&&r.insights.alerts)||[])){const key=(a.title||'')+'|'+(a.keyword_id||'');if(seen.has(key))continue;if(a.keyword_id&&!S.tracked.has(a.keyword_id))continue;if(!onPlat(a,r))continue;seen.add(key);out.push(Object.assign({source:'agent',run_id:r.id,run_date:(r.finished_at||r.started_at||'').slice(0,10)},a));}}
   // Auto alerts computed from the data
   for(const k of S.keywords){const all=kwItems(k.id,true);if(all.length<6)continue;
     const last7=all.filter(i=>daysAgo(i.published_at)<=7).length;const prior=all.filter(i=>{const d=daysAgo(i.published_at);return d>7&&d<=63}).length/8;
@@ -563,6 +578,7 @@ function allAlerts(){
     if(a.n>=4&&b.n>=4&&a.nss-b.nss<=-25)out.push({id:'auto-sent-'+k.id,severity:a.nss-b.nss<=-40?'high':'medium',keyword_id:k.id,type:'sentiment_drop',title:k.term+': net sentiment down '+(b.nss-a.nss)+' points',detail:'Last 30 days '+(a.nss>0?'+':'')+a.nss+' vs prior 60 days '+(b.nss>0?'+':'')+b.nss+'.',source:'auto'});}
   const so={high:0,medium:1,low:2};return out.sort((x,y)=>(so[x.severity]??3)-(so[y.severity]??3));
 }
+function onPlat(a,r){if(S.plat==='all')return true;if(normFocus(r&&r.platform_focus)===S.plat)return true;return (a.evidence_item_ids||[]).map(id=>S.itemById[id]).filter(Boolean).some(platOk);}
 function scopedAlerts(){const a=allAlerts();return S.scope==='all'?a:a.filter(x=>x.keyword_id===S.scope);}
 
 /* ================= Stores ================= */
@@ -605,7 +621,7 @@ const Store={
   subscribe(){const db=this.db;const on=(col,fn,lim)=>{let q=db.collection(col);if(lim)q=q.limit(lim);this.unsubs.push(q.onSnapshot(snap=>{fn(snap.docs.map(d=>Object.assign({},d.data())));assemble();render();},e=>{if(e&&e.code==='revoked'){S.canEdit=false;updateMode();}}));};
     on('keywords',docs=>{S.over.keywords=docs;});
     on('items',docs=>{S.over.items=docs;},1000);
-    on('kwins',docs=>{S.over.kwins=Object.fromEntries(docs.map(d=>[d.keyword_id,d]));});
+    on('kwins',docs=>{const g={},fo={reddit:{},youtube:{},others:{}};for(const d of docs){if(d.focus&&fo[d.focus])fo[d.focus][d.keyword_id]=d;else g[d.keyword_id]=d;}S.over.kwins=g;S.over.kwinsFocus=fo;});
     on('runs',docs=>{S.over.runs=docs;});
     on('state',docs=>{S.over.state=Object.fromEntries(docs.map(d=>[d.item_id,d]));});},
   async refreshGithub(){const [k,r,s]=await Promise.all([GH.readJson('data/keywords.json'),GH.readJson('data/results.json'),GH.readJson('data/state.json')]);if(k)S.base.keywords=k;if(r)S.base.results=r;if(s)S.base.state=s;assemble();},
@@ -634,19 +650,20 @@ const Store={
   async importPayload(p,progress){
     const runId=p.run.id;const stamp=new Date().toISOString();
     const items=p.items.map(it=>Object.assign({},it,{first_seen:it.first_seen||TODAY_ISO,last_seen:TODAY_ISO,run_ids:uniq([...(it.run_ids||[]),runId])}));
-    const kwins=(p.keywords||[]).map(k=>({keyword_id:k.id,term:k.term,summary:k.summary||'',themes:k.themes||[],risks:k.risks||[],opportunities:k.opportunities||[],run_id:runId,updated_at:stamp}));
+    const focus=normFocus(p.run.platform_focus);
+    const kwins=(p.keywords||[]).map(k=>({keyword_id:k.id,term:k.term,summary:k.summary||'',themes:k.themes||[],risks:k.risks||[],opportunities:k.opportunities||[],focus,run_id:runId,updated_at:stamp}));
     const run=Object.assign({},p.run,{keyword_ids:(p.keywords||[]).map(k=>k.id),item_count:items.length,insights:p.insights||{},imported_at:stamp,imported_by:this.who()});
     if(S.mode==='claude'){const db=this.db;let done=0;const total=items.length+kwins.length+1;
       for(const it of items){const prev=S.items.find(x=>x.id===it.id);const merged=prev?Object.assign({},prev,it,{keyword_ids:uniq([...(prev.keyword_ids||[]),...(it.keyword_ids||[])]),first_seen:prev.first_seen||it.first_seen,run_ids:uniq([...(prev.run_ids||[]),runId])}):it;
         await db.collection('items').doc(it.id).set(merged);done++;progress&&progress(done,total);}
-      for(const k of kwins){await db.collection('kwins').doc(k.keyword_id).set(k);done++;progress&&progress(done,total);}
+      for(const k of kwins){await db.collection('kwins').doc(k.focus==='all'?k.keyword_id:k.focus+':'+k.keyword_id).set(k);done++;progress&&progress(done,total);}
       await db.collection('runs').doc(runId).set(run);progress&&progress(total,total);return;}
     if(S.mode==='github'){let cur=await GH.readJson('data/results.json');cur=cur||{schema:'media-monitor.store.v1',workspace:WORKSPACE,runs:[],keyword_insights:{},items:[]};
       const map=new Map((cur.items||[]).map(i=>[i.id,i]));mergeItemsInto(map,items,runId);cur.items=Array.from(map.values());
-      cur.keyword_insights=cur.keyword_insights||{};for(const k of kwins)cur.keyword_insights[k.keyword_id]=k;
+      cur.keyword_insights=cur.keyword_insights||{};cur.keyword_insights_by_focus=cur.keyword_insights_by_focus||{};for(const k of kwins){if(k.focus==='all')cur.keyword_insights[k.keyword_id]=k;else{cur.keyword_insights_by_focus[k.focus]=cur.keyword_insights_by_focus[k.focus]||{};cur.keyword_insights_by_focus[k.focus][k.keyword_id]=k;}}
       cur.runs=[run,...(cur.runs||[]).filter(r=>r.id!==runId)].slice(0,60);cur.updated_at=stamp;
       progress&&progress(1,2);await GH.write('data/results.json',cur,'Import research run '+runId);progress&&progress(2,2);S.base.results=cur;assemble();render();return;}
-    S.over.items=[...(S.over.items||[]).filter(i=>!items.some(n=>n.id===i.id)),...items];for(const k of kwins)S.over.kwins[k.keyword_id]=k;S.over.runs=[run,...(S.over.runs||[]).filter(r=>r.id!==runId)];this.saveLocal();assemble();render();
+    S.over.items=[...(S.over.items||[]).filter(i=>!items.some(n=>n.id===i.id)),...items];S.over.kwinsFocus=S.over.kwinsFocus||{reddit:{},youtube:{},others:{}};for(const k of kwins){if(k.focus==='all')S.over.kwins[k.keyword_id]=k;else{S.over.kwinsFocus[k.focus]=S.over.kwinsFocus[k.focus]||{};S.over.kwinsFocus[k.focus][k.keyword_id]=k;}}S.over.runs=[run,...(S.over.runs||[]).filter(r=>r.id!==runId)];this.saveLocal();assemble();render();
   }
 };
 
@@ -665,9 +682,10 @@ function render(){
   $$('.tab').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.route===S.route)));
   $('#viewTitle').textContent=TITLES[S.route]||'';
   const showScope=['overview','conversations','advanced'].includes(S.route);
-  $('#scopeSel').hidden=!showScope;$('#winSeg').hidden=!showScope;
+  $('#scopeSel').hidden=!showScope;$('#winSeg').hidden=!showScope;$('#platSeg').hidden=!showScope;
   renderScopeSel();
   $$('#winSeg button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.win===S.win)));
+  $$('#platSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.plat===S.plat)));
   renderSubline();renderBanner();
   for(const v of ['overview','conversations','advanced','keywords','feeds']){const el=$('#v-'+v);el.hidden=v!==S.route;}
   if(S.mode==='loading'&&!S.base.keywords&&!S.base.results)return;
@@ -681,7 +699,7 @@ function renderSubline(){
   const r=latestRun();const vis=visible();const its=scoped();
   const srcs=uniq(its.map(i=>i.source_name)).length;
   let t='';
-  if(['overview','conversations','advanced'].includes(S.route))t='<span><b class="num">'+its.length+'</b> conversations from <b class="num">'+srcs+'</b> sources'+(S.win?' in the last '+S.win+' days':'')+'</span>';
+  if(['overview','conversations','advanced'].includes(S.route))t='<span><b class="num">'+its.length+'</b> conversations from <b class="num">'+srcs+'</b> sources'+(S.win?' in the last '+S.win+' days':'')+(S.plat!=='all'?' · <b>'+esc(PLAT_FILTERS[S.plat])+'</b>'+(S.plat==='others'?' (forums, reviews, Hacker News, news, other)':' only'):'')+'</span>';
   else if(S.route==='keywords')t='<span><b class="num">'+S.keywords.filter(k=>k.status!=='paused').length+'</b> active keywords · '+vis.length+' conversations on file</span>';
   else t='<span>Paid feeds ranked by impact on this dashboard. Prices verified Oct 2026.</span>';
   if(r)t+='<span class="muted">·</span><span class="muted">Last research run '+esc(fmtWhen(r.finished_at||r.started_at))+' via '+esc(agentName(r.agent))+'</span>';
@@ -690,8 +708,8 @@ function renderSubline(){
 function agentName(a){return {claude:'Claude',chatgpt:'ChatGPT',cowork:'Copilot Cowork',script:'collector script'}[a]||a||'agent';}
 function renderBanner(){
   const el=$('#banner');const msgs=[];
-  const lim=['reddit','youtube','hackernews'].filter(p=>{const c=coverage(p);return c==='limited'||c==='none';});
-  if(lim.length&&['overview','conversations'].includes(S.route))msgs.push('<b>Coverage note.</b> '+lim.map(p=>PLAT[p].name).join(', ')+' coverage is limited in the current baseline. Run the research skill with its collector (Claude Code, Cowork, or any machine with internet) to fill these in.');
+  const lim=(S.plat==='all'?['reddit','youtube','hackernews']:S.plat==='others'?['hackernews']:[S.plat]).filter(p=>{const c=coverage(p);return c==='limited'||c==='none';});
+  if(lim.length&&['overview','conversations','advanced'].includes(S.route))msgs.push('<b>Coverage note.</b> '+lim.map(p=>PLAT[p].name).join(', ')+' coverage is limited in the current baseline. Run the research skill with its collector (Claude Code, Cowork, or any machine with internet) to fill these in.');
   if(S.mode==='github'&&!S.canEdit&&S.route==='keywords')msgs.push('<b>View only.</b> To add keywords or import results, connect a GitHub token in Update data &gt; Sync.');
   el.innerHTML=msgs.map(m=>'<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg><div>'+m+'</div></div>').join('');
 }
@@ -709,7 +727,7 @@ function renderOverview(){
   '</div>';
   // Platforms
   const byP={};for(const it of its)(byP[it.platform]=byP[it.platform]||[]).push(it);
-  const plats=PLATFORMS.filter(p=>ALWAYS_SHOW.includes(p.id)||byP[p.id]);
+  const plats=PLATFORMS.filter(p=>(ALWAYS_SHOW.includes(p.id)||byP[p.id])&&(S.plat==='all'||platGroup(p.id)===S.plat));
   h+='<section><div class="section-head"><h2>Sentiment by platform</h2><span class="muted">Click a platform to read the conversations.</span><div class="right legend"><span><i style="background:var(--pos)"></i>Positive</span><span><i style="background:var(--mix)"></i>Mixed</span><span><i style="background:var(--neu)"></i>Neutral</span><span><i style="background:var(--neg)"></i>Negative</span></div></div><div class="plats">';
   for(const p of plats){const list=byP[p.id]||[];const s=stats(list,scopeKw());const c=coverage(p.id);
     const covPill=c&&c!=='full'?'<span class="pill cov '+esc(c)+'">'+esc(c==='none'?'Not collected':c[0].toUpperCase()+c.slice(1)+' coverage')+'</span>':'';
@@ -728,7 +746,7 @@ function renderOverview(){
 }
 function kpi(label,val,sub,cls,click,tip,act){return '<div class="kpi'+(click?' click':'')+'"'+(click?' role="button" tabindex="0" data-act="'+act+'"':'')+' data-tip="'+esc(tip)+'"><span class="eyebrow">'+esc(label)+'</span><span class="v num">'+esc(val)+'</span><span class="s">'+esc(sub)+'</span></div>';}
 function alertType(t){return {sentiment_drop:'Sentiment drop',volume_spike:'Volume spike',crisis:'Crisis',opportunity:'Opportunity',competitor_move:'Competitor move'}[t]||'Alert';}
-function topTheme(id){const k=S.kwins[id];if(!k||!k.themes||!k.themes.length)return '';const t=k.themes.slice().sort((a,b)=>(b.mentions||0)-(a.mentions||0))[0];return t.name;}
+function topTheme(id){const k=kwinsFor(id);if(!k||!k.themes||!k.themes.length)return '';const t=k.themes.slice().sort((a,b)=>(b.mentions||0)-(a.mentions||0))[0];return t.name;}
 function keywordTable(){
   let rows='';for(const k of S.keywords){const its=kwItems(k.id);const s=stats(its,k.id);const nr=needsResponse(its).length;
     rows+='<tr class="click'+(S.scope===k.id?' sel':'')+'" data-act="kw" data-id="'+esc(k.id)+'" tabindex="0"><td><div class="kw-name">'+esc(k.term)+(k.status==='paused'?' <span class="pill">Paused</span>':'')+'</div><div class="kw-grp">'+esc(k.group)+'</div></td><td><div class="div-cell">'+divBar(s.nss)+nssHtml(s.nss)+'</div></td><td class="r num">'+s.n+'</td><td class="hide-sm">'+sparkbars(kwItems(k.id,true),k.id)+'</td><td class="hide-sm" style="max-width:240px"><span class="ink2" style="font-size:12.5px">'+esc(topTheme(k.id))+'</span></td><td class="r num">'+(nr?'<span class="pri high" style="text-transform:none">'+nr+'</span>':'<span class="muted">0</span>')+'</td></tr>';}
@@ -875,7 +893,7 @@ function conquest(){
   return '<div class="att">'+list.map(i=>'<div class="att-item"><div class="m">'+(i.keyword_ids||[]).filter(k=>S.kwById[k]).map(k=>'<b>'+esc(S.kwById[k].term)+'</b>').join(', ')+' · '+esc(i.source_name||'')+' · '+esc(fmtDate(i.published_at))+'</div><div class="t"><button class="linkbtn" data-act="goconv" data-id="'+esc(i.id)+'">'+esc(i.title)+'</button></div><div class="m">'+(i.signals||[]).filter(s=>SIGNALS[s]&&s!=='brand_sentiment').map(s=>esc(SIGNALS[s])).join(' · ')+'</div></div>').join('')+'</div>';
 }
 function themesTable(){
-  const rows=[];for(const k of S.keywords){if(S.scope!=='all'&&S.scope!==k.id)continue;const ins=S.kwins[k.id];if(!ins)continue;for(const t of ins.themes||[])rows.push({k,t});}
+  const rows=[];for(const k of S.keywords){if(S.scope!=='all'&&S.scope!==k.id)continue;const ins=kwinsFor(k.id);if(!ins)continue;for(const t of ins.themes||[])rows.push({k,t});}
   if(!rows.length)return '<div style="padding:16px"><div class="empty-state"><b>No themes yet</b></div></div>';
   rows.sort((a,b)=>{const ra=(a.t.momentum==='rising'?0:1),rb=(b.t.momentum==='rising'?0:1);return ra-rb||(a.t.sentiment||0)-(b.t.sentiment||0);});
   return '<div class="tbl-wrap" style="max-height:520px;overflow:auto"><table class="tbl"><thead><tr><th>Theme</th><th>Keyword</th><th>Sentiment</th><th>Momentum</th><th class="r">Mentions</th></tr></thead><tbody>'+rows.map(({k,t})=>{const sv=Math.round((t.sentiment||0)*100);const m=t.momentum||'steady';return '<tr class="theme-row" data-tip="'+esc(t.description||'')+'"><td>'+esc(t.name)+'</td><td class="ink2">'+esc(k.term)+'</td><td>'+nssHtml(sv)+'</td><td><span class="mom '+esc(m)+(m==='rising'&&sv>0?' good':'')+'">'+(m==='rising'?'↑ Rising':m==='fading'?'↓ Fading':'→ Steady')+'</span></td><td class="r num">'+(t.mentions||0)+'</td></tr>';}).join('')+'</tbody></table></div>';
@@ -905,16 +923,17 @@ function execBrief(){
   const its=scoped();const st=stats(its,scopeKw());const lines=[];
   const scopeName=S.scope==='all'?'All tracked keywords':(S.kwById[S.scope]||{}).term;
   lines.push('MEDIA MONITOR BRIEF - '+TODAY.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}));
-  lines.push('Scope: '+scopeName+' | Window: '+(S.win?'last '+S.win+' days':'all data')+' | '+st.n+' conversations');
+  lines.push('Scope: '+scopeName+' | Platforms: '+PLAT_FILTERS[S.plat]+' | Window: '+(S.win?'last '+S.win+' days':'all data')+' | '+st.n+' conversations');
   lines.push('');lines.push('HEADLINE');
   const td=stats(kwItems('td-synnex'),'td-synnex');if(S.tracked.has('td-synnex')&&td.n)lines.push('- TD SYNNEX net sentiment '+(td.nss>0?'+':'')+td.nss+' ('+nssWord(td.nss).toLowerCase()+') across '+td.n+' conversations.');
   const r=latestRun();const ex=(r&&r.insights&&r.insights.executive_summary)||[];
-  const exAll=[];S.runs.slice(0,8).forEach(x=>((x.insights&&x.insights.executive_summary)||[]).forEach(b=>exAll.push(b)));
+  const exAll=[];const runsP=S.runs.filter(x=>normFocus(x.platform_focus)===S.plat);runsP.slice(0,8).forEach(x=>((x.insights&&x.insights.executive_summary)||[]).forEach(b=>exAll.push(b)));
+  if(S.plat!=='all'&&!runsP.length)lines.push('- No '+PLAT_FILTERS[S.plat]+'-focused research run yet. Figures here come from '+PLAT_FILTERS[S.plat]+' conversations on file.');
   uniq(exAll).slice(0,6).forEach(b=>lines.push('- '+b));
   lines.push('');lines.push('ALERTS');const al=scopedAlerts();if(!al.length)lines.push('- None');al.slice(0,6).forEach(a=>lines.push('- ['+String(a.severity).toUpperCase()+'] '+a.title+(a.detail?' - '+a.detail:'')));
   lines.push('');lines.push('SENTIMENT BY KEYWORD (net, conversations)');
   S.keywords.map(k=>({k,s:stats(kwItems(k.id),k.id)})).filter(x=>x.s.n&&(S.scope==='all'||x.k.id===S.scope)).sort((a,b)=>a.s.nss-b.s.nss).forEach(x=>lines.push('- '+x.k.term+': '+(x.s.nss>0?'+':'')+x.s.nss+' ('+x.s.n+')'));
-  lines.push('');lines.push('RECOMMENDED ACTIONS');const acts=[];S.runs.slice(0,8).forEach(x=>((x.insights&&x.insights.recommended_actions)||[]).forEach(a=>acts.push(a)));
+  lines.push('');lines.push('RECOMMENDED ACTIONS');const acts=[];S.runs.slice(0,8).forEach(x=>((x.insights&&x.insights.recommended_actions)||[]).forEach(a=>{if(onPlat(a,x))acts.push(a);}));
   const pr={high:0,medium:1,low:2};acts.sort((a,b)=>(pr[a.priority]??3)-(pr[b.priority]??3));const seen=new Set();let n=0;for(const a of acts){if(seen.has(a.action)||n>=8)continue;seen.add(a.action);n++;lines.push('- ['+(a.owner||'Team')+', '+(a.priority||'medium')+'] '+a.action);}
   if(!n)lines.push('- None');
   lines.push('');lines.push('RESPONSE QUEUE: '+needsResponse(its).length+' conversations waiting for a reply.');
@@ -922,8 +941,8 @@ function execBrief(){
 }
 function agentFeed(){
   const its=scoped();
-  return {schema:'media-monitor.feed.v1',generated_at:new Date().toISOString(),workspace:WORKSPACE,window_days:S.win||null,scope:S.scope,
-    keywords:S.keywords.filter(k=>S.scope==='all'||k.id===S.scope).map(k=>{const ki=kwItems(k.id);const s=stats(ki,k.id);const rk=riskOf(ki,k.id);const ins=S.kwins[k.id]||{};
+  return {schema:'media-monitor.feed.v1',generated_at:new Date().toISOString(),workspace:WORKSPACE,window_days:S.win||null,scope:S.scope,platform_filter:S.plat,
+    keywords:S.keywords.filter(k=>S.scope==='all'||k.id===S.scope).map(k=>{const ki=kwItems(k.id);const s=stats(ki,k.id);const rk=riskOf(ki,k.id);const ins=kwinsFor(k.id)||{};
       return {id:k.id,term:k.term,group:k.group,conversations:s.n,net_sentiment:s.nss,positive:s.pos,negative:s.neg,mixed:s.mix,neutral:s.neu,risk_index:rk.score,
         signals:Object.fromEntries(Object.keys(SIGNALS).map(x=>[x,ki.filter(i=>(i.signals||[]).includes(x)).length]).filter(e=>e[1])),
         summary:ins.summary||'',top_themes:(ins.themes||[]).slice(0,5).map(t=>({name:t.name,sentiment:t.sentiment,momentum:t.momentum,mentions:t.mentions})),risks:ins.risks||[],opportunities:ins.opportunities||[]};}),
@@ -936,9 +955,9 @@ function agentFeed(){
 function openDrawer(id){S.drawerKw=id;$('#scrim').hidden=false;$('#drawer').hidden=false;renderDrawer(id);$('#drawer').focus&&setTimeout(()=>{const b=$('#drawer .x');b&&b.focus();},0);}
 function closeOverlays(){$('#scrim').hidden=true;$('#drawer').hidden=true;$('#modal').hidden=true;S.drawerKw=null;}
 function renderDrawer(id){
-  const k=S.kwById[id];if(!k){closeOverlays();return;}const its=kwItems(id);const s=stats(its,id);const rk=riskOf(its,id);const ins=S.kwins[id]||{};
+  const k=S.kwById[id];if(!k){closeOverlays();return;}const its=kwItems(id);const s=stats(its,id);const rk=riskOf(its,id);const ins=kwinsFor(id)||{};
   const byP={};its.forEach(i=>(byP[i.platform]=byP[i.platform]||[]).push(i));
-  let h='<div class="drawer-head"><div style="display:grid;gap:4px"><span class="eyebrow">'+esc(k.group)+(ins.updated_at?' · researched '+esc(fmtDate(String(ins.updated_at).slice(0,10))):'')+'</span><h2 id="drawerTitle">'+esc(k.term)+'</h2>'+(k.query?'<span class="query">'+esc(k.query)+'</span>':'')+'</div><button class="btn ghost sm x" data-act="close" aria-label="Close">Close</button></div><div class="drawer-body">';
+  let h='<div class="drawer-head"><div style="display:grid;gap:4px"><span class="eyebrow">'+esc(k.group)+(S.plat!=='all'?' · '+esc(PLAT_FILTERS[S.plat])+' only':'')+(ins.updated_at?' · researched '+esc(fmtDate(String(ins.updated_at).slice(0,10))):'')+(S.plat!=='all'&&ins.summary&&ins.focus!==S.plat?' · summary covers all platforms':'')+'</span><h2 id="drawerTitle">'+esc(k.term)+'</h2>'+(k.query?'<span class="query">'+esc(k.query)+'</span>':'')+'</div><button class="btn ghost sm x" data-act="close" aria-label="Close">Close</button></div><div class="drawer-body">';
   h+='<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kpi"><span class="eyebrow">Net sentiment</span><span class="v num">'+(s.n?(s.nss>0?'+':'')+s.nss:'n/a')+'</span><span class="s">'+esc(nssWord(s.nss))+'</span></div><div class="kpi"><span class="eyebrow">Conversations</span><span class="v num">'+s.n+'</span><span class="s">'+s.community+' community</span></div><div class="kpi"><span class="eyebrow">Risk index</span><span class="v num">'+rk.score+'</span><span class="s"><span class="sev '+riskSev(rk.score)+'"><i></i>'+riskSev(rk.score)+'</span></span></div></div>';
   if(ins.summary)h+='<div><div class="eyebrow" style="margin-bottom:6px">Analyst summary</div><p style="margin:0;font-size:14.5px;line-height:1.6">'+esc(ins.summary)+'</p></div>';
   h+='<div><div class="eyebrow" style="margin-bottom:8px">By platform</div><div class="stack">'+Object.entries(byP).sort((a,b)=>b[1].length-a[1].length).map(([p,l])=>{const ps=stats(l,id);return '<div style="display:grid;grid-template-columns:140px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:13px"><span>'+esc(PLAT[p]?PLAT[p].name:p)+' <span class="muted num">('+ps.n+')</span></span>'+sbar(ps)+'<span style="text-align:right">'+nssHtml(ps.nss)+'</span></div>';}).join('')+'</div></div>';
@@ -954,7 +973,7 @@ function renderDrawer(id){
 function renderKeywords(){
   const ro=!S.canEdit;
   let h='<div class="two"><section class="panel flush"><div class="section-head" style="padding:16px 16px 0"><h2>Tracked keywords</h2><span class="muted">'+S.keywords.length+' total</span></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Keyword</th><th class="hide-sm">Search string</th><th>Status</th><th class="r">Conv.</th><th class="r">Actions</th></tr></thead><tbody>';
-  for(const k of S.keywords){const n=kwItems(k.id,true).length;const paused=k.status==='paused';
+  for(const k of S.keywords){const n=kwItems(k.id,true,true).length;const paused=k.status==='paused';
     h+='<tr><td><div class="kw-name">'+esc(k.term)+'</div><div class="kw-grp">'+esc(k.group)+(k.subreddits&&k.subreddits.length?' · '+esc(k.subreddits.slice(0,3).map(s=>'r/'+s).join(', '))+(k.subreddits.length>3?' +'+(k.subreddits.length-3):''):'')+'</div></td><td class="hide-sm" style="max-width:300px"><span class="query">'+esc(k.query||k.term)+'</span></td><td><span class="status-dot'+(paused?' paused':'')+'"><i></i>'+(paused?'Paused':'Active')+'</span></td><td class="r num">'+n+'</td><td class="r">';
     if(ro)h+='<span class="muted" style="font-size:12px">View only</span>';
     else if(S.confirmDel===k.id)h+='<div class="confirm">Remove '+esc(k.term)+'? Its data stays on file. <button class="btn sm danger" data-act="kwdel" data-id="'+esc(k.id)+'">Remove</button><button class="btn sm" data-act="kwdelcancel">Cancel</button></div>';
@@ -983,11 +1002,13 @@ function renderFeeds(){
 }
 
 /* ---------- Update data modal ---------- */
-function openModal(tab){S.modalTab=tab||S.modalTab||'run';$('#scrim').hidden=false;$('#modal').hidden=false;renderModal();}
+function openModal(tab){S.modalTab=tab||S.modalTab||'run';S.runPlat=S.plat;$('#scrim').hidden=false;$('#modal').hidden=false;renderModal();}
 function activeKeywords(){return S.keywords.filter(k=>k.status!=='paused').map(k=>({id:k.id,term:k.term,group:k.group,query:k.query||k.term,subreddits:k.subreddits||[],notes:k.notes||''}));}
 function runPrompt(agent){
   const kws=JSON.stringify(activeKeywords(),null,1);const repo=GH.repo()||'ccherosc/TDS_MEDIAMONITOR';
-  const common='Window: last 30 days (include up to 90 days for context).\nKeywords (JSON):\n'+kws+'\n\nOutput: ONE JSON file named media-monitor-results-'+TODAY_ISO+'.json that follows the media-monitor.v1 schema exactly (schema, workspace "'+WORKSPACE+'", run, keywords, items, insights). Every item needs a real URL you opened, a publish date, platform, paraphrased summary, sentiment (label, score -1..1, confidence, emotion), aspects, signals, intent_stage, influence, and a suggested response when a TD SYNNEX rep could genuinely help (disclose affiliation, no hard sell). Never invent URLs or engagement numbers.';
+  const f=S.runPlat||'all';const FOCUS={all:'Platform focus: ALL platforms (Reddit, YouTube, Hacker News, forums, review sites, news). Set run.platform_focus to "all".',reddit:'Platform focus: REDDIT ONLY. Research Reddit posts and their comment threads only (collector: --platform-focus reddit). Set run.platform_focus to "reddit", mark every other platform "none" in run.coverage, and write keyword summaries about what Reddit says.',youtube:'Platform focus: YOUTUBE ONLY. Research YouTube videos and their comments only (collector: --platform-focus youtube). Set run.platform_focus to "youtube", mark every other platform "none" in run.coverage, and write keyword summaries about what YouTube says.',others:'Platform focus: OTHERS ONLY, meaning everything except Reddit and YouTube: community forums, review sites, Hacker News, news, X, LinkedIn (collector: --platform-focus others). Set run.platform_focus to "others" and mark reddit and youtube "none" in run.coverage.'};
+  const fname='media-monitor-results-'+TODAY_ISO+(f==='all'?'':'-'+f)+'.json';
+  const common=FOCUS[f]+'\nWindow: last 30 days (include up to 90 days for context).\nKeywords (JSON):\n'+kws+'\n\nOutput: ONE JSON file named '+fname+' that follows the media-monitor.v1 schema exactly (schema, workspace "'+WORKSPACE+'", run, keywords, items, insights). Every item needs a real URL you opened, a publish date, platform, paraphrased summary, sentiment (label, score -1..1, confidence, emotion), aspects, signals, intent_stage, influence, and a suggested response when a TD SYNNEX rep could genuinely help (disclose affiliation, no hard sell). Never invent URLs or engagement numbers.';
   if(agent==='claude')return 'Use the media-monitor-research skill.\n\n'+common+'\n\nDelivery: if you can run code with internet access, run the skill collector for Reddit, YouTube and Hacker News first. Then either commit the merged results to GitHub repo '+repo+' (data/results.json) using the skill publish script, or give me the JSON file so I can load it into the dashboard.';
   if(agent==='chatgpt')return 'Follow the Media Monitor research instructions in this project (media-monitor-research). Use web search and deep research. Prioritize Reddit threads, YouTube videos, Hacker News, vendor community forums, and review sites over press releases.\n\n'+common+'\n\nGive me the result as a downloadable .json file (not in the chat body).';
   return 'Run the Media Monitor research skill (media-monitor-research) on these keywords. Use web search and Deep Research. Prioritize Reddit, YouTube, Hacker News, vendor forums, and review sites.\n\n'+common+'\n\nSave the file to OneDrive in the folder "Media Monitor/results" and tell me when it is saved. Do not send email or post anywhere.';
@@ -996,7 +1017,7 @@ function renderModal(){
   const t=S.modalTab;const m=$('#modal');
   let h='<div class="modal-head"><h2 id="modalTitle">Update data</h2><button class="btn ghost sm x" data-act="close" aria-label="Close">Close</button></div><div class="modal-body"><div class="subtabs" role="tablist"><button role="tab" data-mtab="run" aria-selected="'+(t==='run')+'">1. Run research</button><button role="tab" data-mtab="load" aria-selected="'+(t==='load')+'">2. Load results</button><button role="tab" data-mtab="sync" aria-selected="'+(t==='sync')+'">Sync &amp; export</button></div>';
   if(t==='run'){const a=S.modalAgent;
-    h+='<p class="ink2" style="margin:0">Pick the AI tool you are using. The prompt includes your '+activeKeywords().length+' active keywords. Install the media-monitor-research skill in that tool first (one-time).</p><div class="seg" role="group" aria-label="AI tool">'+[['claude','Claude'],['chatgpt','ChatGPT'],['cowork','Copilot Cowork']].map(([v,l])=>'<button type="button" data-agent="'+v+'" aria-pressed="'+(a===v)+'">'+l+'</button>').join('')+'</div>';
+    h+='<p class="ink2" style="margin:0">Pick the platforms and the AI tool. The prompt includes your '+activeKeywords().length+' active keywords. Install the media-monitor-research skill in that tool first (one-time).</p><div class="field"><label>Platforms to research</label><div class="seg" role="group" aria-label="Platforms to research">'+[['all','All'],['reddit','Reddit only'],['youtube','YouTube only'],['others','Others only']].map(([v,l])=>'<button type="button" data-rplat="'+v+'" aria-pressed="'+(S.runPlat===v)+'">'+l+'</button>').join('')+'</div><span class="hint">Single-platform runs keep their own keyword summaries, shown when you filter the dashboard to that platform.</span></div><div class="field"><label>AI tool</label><div class="seg" role="group" aria-label="AI tool">'+[['claude','Claude'],['chatgpt','ChatGPT'],['cowork','Copilot Cowork']].map(([v,l])=>'<button type="button" data-agent="'+v+'" aria-pressed="'+(a===v)+'">'+l+'</button>').join('')+'</div></div>';
     h+='<div class="codebox"><textarea id="runTxt" class="textarea" readonly aria-label="Prompt">'+esc(runPrompt(a))+'</textarea></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-act="copyrun">Copy prompt</button><button class="btn" data-act="dlkw">Download keywords.json</button><button class="btn ghost" data-mtab="load">Next: load results →</button></div>';}
   else if(t==='load'){
     h+='<p class="ink2" style="margin:0">Load the JSON file your AI tool produced. It merges with existing data: same URL = same conversation, so nothing is double counted.</p>';
@@ -1032,6 +1053,7 @@ async function normalizePayload(p){
   const ins=Object.assign({},p.insights||{});for(const key of ['alerts','trends','recommended_actions']){const arr=[];for(const e of (ins[key]||[]))arr.push(Object.assign({},e,{evidence_item_ids:await fix(e.evidence_item_ids)}));ins[key]=arr;}p.insights=ins;
   const run=Object.assign({id:'run-'+TODAY_ISO+'-'+Math.random().toString(36).slice(2,7),agent:'other',started_at:new Date().toISOString(),window_days:30},p.run||{});
   if(!run.finished_at)run.finished_at=new Date().toISOString();
+  run.platform_focus=normFocus(run.platform_focus);
   const untracked=uniq([...out.flatMap(i=>i.keyword_ids),...kws.map(k=>k.id)]).filter(id=>!S.tracked.has(id));
   return {schema:'media-monitor.v1',workspace:p.workspace||WORKSPACE,run,keywords:kws,items:out,insights:p.insights||{},_warn:warn,_untracked:untracked};
 }
@@ -1050,7 +1072,9 @@ function csvAll(){const cols=['date','platform','source','title','url','keywords
 /* ================= Events ================= */
 function go(route){if(!TITLES[route])route='overview';S.route=route;if(location.hash!=='#'+route){try{history.replaceState(null,'','#'+route);}catch(e){location.hash=route;}}closeOverlays();window.scrollTo(0,0);render();}
 document.addEventListener('click',async e=>{
-  const t=e.target.closest('[data-act],[data-route],[data-mtab],[data-agent],[data-win]');if(!t)return;
+  const t=e.target.closest('[data-act],[data-route],[data-mtab],[data-agent],[data-win],[data-plat],[data-rplat]');if(!t)return;
+  if(t.dataset.plat&&t.closest('#platSeg')){S.plat=t.dataset.plat;lsSet('mm_plat',S.plat);S.conv.platform='all';S.conv.limit=30;render();return;}
+  if(t.dataset.rplat){S.runPlat=t.dataset.rplat;renderModal();return;}
   if(t.dataset.route){go(t.dataset.route);return;}
   if(t.dataset.win!=null&&t.closest('#winSeg')){S.win=+t.dataset.win;render();return;}
   if(t.dataset.mtab){S.modalTab=t.dataset.mtab;renderModal();return;}
@@ -1082,7 +1106,7 @@ document.addEventListener('click',async e=>{
     case 'dlall':downloadFile('media-monitor-export-'+TODAY_ISO+'.json',JSON.stringify({schema:'media-monitor.store.v1',workspace:WORKSPACE,exported_at:new Date().toISOString(),keywords:S.keywords,runs:S.runs,keyword_insights:S.kwins,items:visible(),state:S.state},null,1));break;
     case 'dlcsv':downloadFile('media-monitor-conversations-'+TODAY_ISO+'.csv',csvAll(),'text/csv');break;
     case 'impcheck':{const out=$('#impOut');try{const p=await readImport();S.pendingImport=p;const kwNames=uniq(p.items.flatMap(i=>i.keyword_ids));
-        out.innerHTML='<div class="preview"><div><b>'+p.items.length+'</b> conversations · <b>'+p.keywords.length+'</b> keyword summaries · run '+esc(p.run.id)+' via '+esc(agentName(p.run.agent))+'</div><div>Keywords: '+esc(kwNames.map(k=>S.kwById[k]?S.kwById[k].term:k).join(', '))+'</div>'+p._warn.map(w=>'<div class="err">'+esc(w)+'</div>').join('')+(p._untracked.length?'<label class="check"><input type="checkbox" id="impAddKw" checked> Add '+p._untracked.length+' untracked keyword(s) to the list: '+esc(p._untracked.join(', '))+'</label>':'')+'<div style="display:flex;gap:8px;align-items:center"><button class="btn primary" data-act="impgo">Import '+p.items.length+' conversations</button><span id="impProg" class="muted"></span></div></div>';}
+        out.innerHTML='<div class="preview"><div><b>'+p.items.length+'</b> conversations · <b>'+p.keywords.length+'</b> keyword summaries · run '+esc(p.run.id)+' via '+esc(agentName(p.run.agent))+'</div><div>Platform focus: <b>'+esc(PLAT_FILTERS[p.run.platform_focus])+'</b>'+(p.run.platform_focus!=='all'?'. Its keyword summaries show when the dashboard is filtered to that platform; the all-platform summaries stay as they are.':'')+'</div><div>Keywords: '+esc(kwNames.map(k=>S.kwById[k]?S.kwById[k].term:k).join(', '))+'</div>'+p._warn.map(w=>'<div class="err">'+esc(w)+'</div>').join('')+(p._untracked.length?'<label class="check"><input type="checkbox" id="impAddKw" checked> Add '+p._untracked.length+' untracked keyword(s) to the list: '+esc(p._untracked.join(', '))+'</label>':'')+'<div style="display:flex;gap:8px;align-items:center"><button class="btn primary" data-act="impgo">Import '+p.items.length+' conversations</button><span id="impProg" class="muted"></span></div></div>';}
       catch(err){out.innerHTML='<div class="err">'+esc(err.message)+'</div>';}break;}
     case 'impgo':{const p=S.pendingImport;if(!p)break;t.disabled=true;const prog=$('#impProg');
       try{if(p._untracked.length&&$('#impAddKw')&&$('#impAddKw').checked){const add=p._untracked.map(id=>{const k=p.keywords.find(x=>x.id===id)||{};return {id,term:k.term||id,group:k.group&&GROUPS.includes(k.group)?k.group:'Custom',query:k.query||k.term||id,subreddits:[],status:'active',added_at:new Date().toISOString(),added_by:Store.who()};});await Store.saveKeywords([...S.keywords,...add],'Add keywords from import');}

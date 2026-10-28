@@ -12,7 +12,7 @@ Keywords (dashboard)  ->  Research skill (Claude, Cowork, ChatGPT)  ->  results 
 ```
 
 1. The team adds or removes keywords on the **Keywords** tab.
-2. Someone runs the research skill in Claude, Copilot Cowork, or ChatGPT (the dashboard writes the prompt for you).
+2. Someone runs the research skill in Claude, Copilot Cowork, or ChatGPT (the dashboard writes the prompt for you). Pick all platforms or a single focus: Reddit only, YouTube only, or Others.
 3. The skill returns one JSON results file. Load it with **Update data > Load results**, or let Claude Code push it to GitHub.
 4. The dashboard recalculates everything: sentiment by platform, alerts, response queue, competitive map, pain-point matrix.
 
@@ -20,6 +20,7 @@ Keywords (dashboard)  ->  Research skill (Claude, Cowork, ChatGPT)  ->  results 
 
 | Tab | For |
 |---|---|
+| All analysis tabs | Filter by keyword, time window (30, 90 days, all), and platform (All, Reddit, YouTube, Others). The platform filter sticks between visits. |
 | Overview | Net sentiment, conversation count, replies needed, alerts, sentiment by platform, keyword table |
 | Conversations | Every conversation with filters, source links, suggested replies, and Mark responded / Dismiss |
 | Advanced | Narrative risk index, competitive position map, pain-point matrix, signal matrix, conquest opportunities, theme momentum, weekly sentiment, emotion profile, earned voice, vision findings, executive brief, agent feed |
