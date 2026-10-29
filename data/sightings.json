@@ -1,6 +1,274 @@
 {
  "schema": "media-monitor.sightings.v1",
  "workspace": "tdsynnex-internal",
- "updated_at": "2026-10-28T21:04:13Z",
- "items": {}
+ "updated_at": "2026-10-29T04:42:10Z",
+ "items": {
+  "2a35e750bb72": {
+   "id": "2a35e750bb72",
+   "url": "https://www.trustpilot.com/reviews/6abe9a40538078b636dabd6b",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-pain"
+   ],
+   "note": "Trustpilot 1-star, Oct 1 2026 (US): says service slipped since the Tech Data merger; shipping charges, slow delivery, no reimbursement. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "27dcade634ac": {
+   "id": "27dcade634ac",
+   "url": "https://www.trustpilot.com/reviews/6ab53585d8c9ec7fff8b4620",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-pain"
+   ],
+   "note": "Trustpilot 1-star, Sep 24 2026 (US): lost free shipping, 3-month backorder on a big project, missing items slow to resolve. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "3a838adca698": {
+   "id": "3a838adca698",
+   "url": "https://www.trustpilot.com/reviews/6a8d7b3aff61129deaa020e6",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-pain"
+   ],
+   "note": "Trustpilot 1-star, Aug 25 2026 (UK): webstore price not honored, refund still pending. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "631fb9b4b665": {
+   "id": "631fb9b4b665",
+   "url": "https://www.trustpilot.com/reviews/6a74dda96bd7b38f5dff6457",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-pain"
+   ],
+   "note": "Trustpilot 1-star, Aug 6 2026 (US): billed but unfulfilled orders, cancellations, could not pay for Veeam licenses. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "c705d4f83128": {
+   "id": "c705d4f83128",
+   "url": "https://www.trustpilot.com/reviews/6a14c6a3a482eb596702572d",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-pain"
+   ],
+   "note": "Trustpilot 1-star, May 26 2026 (CA): could not set up online payment or auto-debit on a lease. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "e97a2997450c": {
+   "id": "e97a2997450c",
+   "url": "https://www.trustpilot.com/reviews/69fa11d2463a2484fca7b97f",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-pain"
+   ],
+   "note": "Trustpilot 1-star, May 5 2026 (US): long-time Synnex customer; outsourced account rep, license orders stuck, no escalation path. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "3ce0af0dd798": {
+   "id": "3ce0af0dd798",
+   "url": "https://www.trustpilot.com/reviews/6978f1d8c31ea427908afd5a",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "distributor-choice"
+   ],
+   "note": "Trustpilot 1-star, Jan 27 2026 (Morocco): dealer application refused with no reason given. No company reply.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "c6f83c052183": {
+   "id": "c6f83c052183",
+   "url": "https://community.spiceworks.com/t/vmware-bringing-back-vsphere-standard-again/1257425",
+   "platform": "other",
+   "keyword_ids": [
+    "td-synnex",
+    "ingram-micro",
+    "distributor-choice"
+   ],
+   "note": "Spiceworks, Oct 2026, 36 posts: admins expect distributors (TD SYNNEX, Ingram) to know VMware licensing changes first. See post 32.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "1c53242ac3d6": {
+   "id": "1c53242ac3d6",
+   "url": "https://community.spiceworks.com/t/where-does-your-production-hardware-actually-come-from/1248823",
+   "platform": "other",
+   "keyword_ids": [
+    "distributor-choice",
+    "dell",
+    "lenovo"
+   ],
+   "note": "Spiceworks, Jan 2026, 19 posts: where IT buys production hardware; debate on reps as advisors vs order-takers. Category signal.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "457ac1fdc53c": {
+   "id": "457ac1fdc53c",
+   "url": "https://community.spiceworks.com/t/snap-crew-11-heads-home-wolf-lunch-dna-super-monitors/1248371",
+   "platform": "other",
+   "keyword_ids": [
+    "pax8"
+   ],
+   "note": "Spiceworks news roundup, Jan 14 2026: item on Pax8 accidentally exposing data. Competitor incident; check replies.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "209df568fac4": {
+   "id": "209df568fac4",
+   "url": "https://community.spiceworks.com/t/show-activation-keys-for-windows-10-esu-results-in-error-e6118/1245721",
+   "platform": "other",
+   "keyword_ids": [
+    "pax8",
+    "microsoft"
+   ],
+   "note": "Spiceworks, Nov 2025: Windows 10 ESU key error; Microsoft sent the admin back to the CSP (Pax8). Licensing pain via distributor.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "0364d9baf0a6": {
+   "id": "0364d9baf0a6",
+   "url": "https://community.spiceworks.com/t/share-your-biggest-it-grievance-from-2025-and-win-a-250-amazon-gift-card/1246924",
+   "platform": "other",
+   "keyword_ids": [
+    "ingram-micro",
+    "microsoft"
+   ],
+   "note": "Spiceworks, Dec 2025: admin's top grievance was routing a Microsoft support case through the partner (Ingram Micro). See post 18.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "6f0edb00a1f8": {
+   "id": "6f0edb00a1f8",
+   "url": "https://www.youtube.com/watch?v=n4begOkkVHs",
+   "platform": "youtube",
+   "keyword_ids": [
+    "td-synnex",
+    "agentic-ai"
+   ],
+   "note": "YouTube, MSP Radio, ~8 mo: TD SYNNEX's Jessica Yeck on why few MSP AI projects reach ROI without partner readiness.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "94dc4e8d43d4": {
+   "id": "94dc4e8d43d4",
+   "url": "https://www.youtube.com/watch?v=Xywyds1IfvM",
+   "platform": "youtube",
+   "keyword_ids": [
+    "pax8",
+    "microsoft",
+    "distributor-choice"
+   ],
+   "note": "YouTube, Pax8 APAC, ~11 mo: CSP direct vs indirect pitch. Competitor conquest content; check comments.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "83c8b5111e05": {
+   "id": "83c8b5111e05",
+   "url": "https://www.youtube.com/watch?v=Hhegr5UR_4w",
+   "platform": "youtube",
+   "keyword_ids": [
+    "ingram-micro",
+    "agentic-ai"
+   ],
+   "note": "YouTube, Ingram Micro, ~1 mo: connecting Claude to the Xvantage MCP server. Competitor agentic AI move.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "a73a514d0ad5": {
+   "id": "a73a514d0ad5",
+   "url": "https://www.youtube.com/watch?v=_tArxgfWsqI",
+   "platform": "youtube",
+   "keyword_ids": [
+    "distributor-choice",
+    "msp-tools"
+   ],
+   "note": "YouTube, MSP Radio, ~7 mo: what a distributor will and won't own in MSP security. Category framing.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "eab9435c8a9b": {
+   "id": "eab9435c8a9b",
+   "url": "https://www.youtube.com/watch?v=KrS-IwwLPC4",
+   "platform": "youtube",
+   "keyword_ids": [
+    "td-synnex",
+    "lenovo",
+    "agentic-ai"
+   ],
+   "note": "YouTube, IT Reseller (Poland), ~5 mo, ~7.9K views: third-party coverage of TD SYNNEX Destination AI with Lenovo.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "bb671aed8198": {
+   "id": "bb671aed8198",
+   "url": "https://www.youtube.com/watch?v=BjySy4O8A1M",
+   "platform": "youtube",
+   "keyword_ids": [
+    "td-synnex"
+   ],
+   "note": "YouTube, Charged Alpha, ~1 mo: SNX Q3 FY2026 take, record profit vs a large cash outflow. Investor narrative.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  },
+  "0a59898667ef": {
+   "id": "0a59898667ef",
+   "url": "https://www.youtube.com/watch?v=4pELFMdOCFQ",
+   "platform": "youtube",
+   "keyword_ids": [
+    "td-synnex"
+   ],
+   "note": "YouTube, Vada Vista, posted Oct 28 2026: SNX stock analysis framed as growth on credit. Fresh, critical investor take.",
+   "status": "pending",
+   "source": "claude-hunt",
+   "added_at": "2026-10-29T04:42:10Z",
+   "added_by": "Claude (hunt)"
+  }
+ }
 }
