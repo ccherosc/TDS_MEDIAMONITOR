@@ -1,4 +1,4 @@
-# Media Monitor: handoff (Oct 28, 2026)
+# Media Monitor: handoff (updated Oct 29, 2026)
 
 ## Where things stand
 
@@ -19,12 +19,20 @@
 - Skill: aliases in search, search-engine lens (`BRAVE_API_KEY`), queue links (`pull-queue`, `--queue`, `--inbox-only`), `company_reply`, `run.mode`
 - docs/REDDIT-PLAYBOOK.md: API request wording, Reddit Pro keywords, AMA, corporate email
 
+## Hunt run (Oct 29, 2026)
+
+- Reddit is blocked by policy for Claude's browser and web search. Claude cannot run the Reddit Hunt list. A person works it with the "+ Media Monitor" bookmark button.
+- Claude swept non-Reddit sources instead and added 19 items to the Sightings inbox: 7 Trustpilot reviews, 5 Spiceworks threads, 7 YouTube videos.
+- Trustpilot: TD SYNNEX scores 1.8 of 5 on 17 reviews. All 7 reviews from the last 12 months are 1-star. The profile was claimed in May 2026 and no review has a company reply.
+- Hacker News had nothing relevant in 12 months. YouTube is mostly TD SYNNEX's own channels.
+
 ## Next steps
 
-1. **From home:** open this same chat in the Claude desktop app and send "run the Reddit hunt". Claude works the Hunt list in the desktop browser, finds threads, and adds them to the Sightings inbox. Then Run research > Inbox only.
+1. **Now:** Dashboard > Sightings > Research the inbox > Get research prompt. Run it, then Load results.
 2. **By Fri Oct 31:** request Reddit API access (wording in the playbook).
-3. **This week:** set up Reddit Pro; send the corporate email about Sprinklr / Brandwatch / Meltwater.
-4. **Each editor:** create a fine-grained GitHub token (TDS_MEDIAMONITOR, Contents read/write) and connect it in Update data > Sync & export.
+3. **Daily, by hand:** work 5 to 6 Reddit searches from the Hunt list; add threads with the bookmark button.
+4. **This week:** set up Reddit Pro; send the corporate email about Sprinklr / Brandwatch / Meltwater; ask who owns the Trustpilot profile.
+5. **Each editor:** create a fine-grained GitHub token (TDS_MEDIAMONITOR, Contents read/write) and connect it in Update data > Sync & export.
 
 ## Known limits
 
